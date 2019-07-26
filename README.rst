@@ -13,7 +13,13 @@ process_fastq
         :target: https://process-fastq.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
+.. image:: https://pyup.io/repos/github/rhshah/process_fastq/shield.svg
+     :target: https://pyup.io/repos/github/rhshah/process_fastq/
+     :alt: Updates
 
+.. image:: https://pyup.io/repos/github/rhshah/process_fastq/python-3-shield.svg
+     :target: https://pyup.io/repos/github/rhshah/process_fastq/
+     :alt: Python 3
 
 
 This package will help process, merge and link fastq in user specified directory from manifest file
