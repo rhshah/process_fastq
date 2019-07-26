@@ -34,6 +34,12 @@ Features
 
 * TODO
 
+1. Given Manifest file, path to location of raw fastq, path to where they need to linked:
+  a. Get all the folders for the samples and the fastq file
+  b. Check quickly the lenght of the reads if read length is not the same use the shorter read length and trim the fastq
+  c. Merge the final fastq if comming from multiple runs. 
+  d. Link all the fastq with the folder structure in user provided location
+
 Credits
 -------
 
