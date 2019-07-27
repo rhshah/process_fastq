@@ -13,7 +13,13 @@ process_fastq
         :target: https://process-fastq.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
+.. image:: https://pyup.io/repos/github/rhshah/process_fastq/shield.svg
+     :target: https://pyup.io/repos/github/rhshah/process_fastq/
+     :alt: Updates
 
+.. image:: https://pyup.io/repos/github/rhshah/process_fastq/python-3-shield.svg
+     :target: https://pyup.io/repos/github/rhshah/process_fastq/
+     :alt: Python 3
 
 
 This package will help process, merge and link fastq in user specified directory from manifest file
@@ -27,6 +33,12 @@ Features
 --------
 
 * TODO
+
+1. Given Manifest file, path to location of raw fastq, path to where they need to linked:
+  a. Get all the folders for the samples and the fastq file
+  b. Check quickly the lenght of the reads if read length is not the same use the shorter read length and trim the fastq
+  c. Merge the final fastq if comming from multiple runs. 
+  d. Link all the fastq with the folder structure in user provided location
 
 Credits
 -------
