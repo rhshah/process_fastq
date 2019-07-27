@@ -10,6 +10,12 @@ Created on July 26, 2019
 Description: console script for running process_fastq
 @author: Ronak H Shah
 """
+__all__ = []
+__version_info__ = ('0', '1', '0')
+__version__ = '.'.join(__version_info__)
+__date__ = '2019-07-27'
+__updated__ = '2019-07-28'
+
 import sys
 import logging
 
@@ -28,14 +34,14 @@ except ImportError as e:
     )
     exit(1)
 try:
-    from process_fastq import process_fastq as pf
+    import process_fastq as pf
 except ImportError as e:
     print(
         "cli: process_fastq module could not be loaded, please install package correctly to get this running."
     )
     exit(1)
 try:
-    from process_fastq import helper as hp
+    import helper as hp
 except ImportError as e:
     print(
         "cli: helper module could not be loaded, please install package correctly to get this running."
@@ -76,6 +82,10 @@ click_log.ColorFormatter.colors["info"] = dict(fg="green")
     required=True,
     type=click.Path(exists=True),
     help="Full path to location of cutadapt executable",
+)
+@click.version_option(
+    version=__version__,
+    prog_name='process_fastq'
 )
 @click_log.simple_verbosity_option(logger)
 def main(filename, fastq_path, output_path, cutadapt_path):
