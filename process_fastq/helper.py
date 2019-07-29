@@ -48,8 +48,10 @@ def make_path(path, run_id, request_id, sample_id):
 
 def get_fastq(path):
     logger.info("helper: Globbing fastq.gz file")
-    glob_path_R1 = os.path.join(path, "*R1*.gz")
-    glob_path_R2 = os.path.join(path, "*R2*.gz")
+    R1_pattern = "*R1*.gz"
+    R2_pattern = "*R2*.gz"
+    glob_path_R1 = os.path.join(path, R1_pattern)
+    glob_path_R2 = os.path.join(path, R2_pattern)
     glob_path_R1 = glob.glob(glob_path_R1)
     glob_path_R2 = glob.glob(glob_path_R2)
     logger.info("helper: Done globbing fastq.gz file")
