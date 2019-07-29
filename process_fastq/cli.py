@@ -67,14 +67,14 @@ click_log.ColorFormatter.colors["debug"] = dict(fg="yellow")
     "-s",
     required=True,
     type=click.STRING,
-    help="Sample id to get the fastq files can be either IGO sample id or Investigator sample id (eg: -s EDD_ret_pt049_cf02)"
+    help="Sample id to get the fastq files can be either IGO sample id or Investigator sample id (eg: -s EDD_ret_pt049_cf02)",
 )
 @click.option(
     "--request-id",
     "-p",
     required=True,
     type=click.STRING,
-    help="IGO request id to get the fastq files. (eg:-p Project_05500_GB or -p 05500_GB)"
+    help="IGO request id to get the fastq files. (eg:-p Project_05500_GB or -p 05500_GB)",
 )
 @click.option(
     "--run-id",
@@ -82,28 +82,28 @@ click_log.ColorFormatter.colors["debug"] = dict(fg="yellow")
     required=True,
     multiple=True,
     type=click.STRING,
-    help="Run id to get the fastq files, can be specified multiple times (eg:-r PITT_0376 -r PITT_0378)"
+    help="Run id to get the fastq files, can be specified multiple times (eg:-r PITT_0376 -r PITT_0378)",
 )
 @click.option(
     "--fastq-path",
     "-fp",
     required=True,
     type=click.Path(),
-    help="Full path to fastq files"
+    help="Full path to fastq files",
 )
 @click.option(
     "--output-path",
     "-op",
     required=True,
     type=click.Path(),
-    help="Full path to where we link the output files"
+    help="Full path to where we link the output files",
 )
 @click.option(
     "--cutadapt-path",
     "-cp",
     required=True,
     type=click.Path(exists=True),
-    help="Full path to location of cutadapt executable"
+    help="Full path to location of cutadapt executable",
 )
 @click.version_option(version=__version__, prog_name="process_fastq")
 @click_log.simple_verbosity_option(logger)
