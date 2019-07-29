@@ -15,6 +15,7 @@ import sys
 import os
 import logging
 import glob
+import subprocess
 
 try:
     import pandas as pd
@@ -43,7 +44,7 @@ def make_path(dir_path, run_id, request_id, sample_id):
     glob_path = os.path.join(dir_path, glob_run_id, glob_request_id, glob_sample_id)
     glob_path = glob.glob(glob_path)
     logger.info("helper: Finished making file path to search for files")
-    return ''.join(glob_path)
+    return "".join(glob_path)
 
 
 def get_fastq(dir_path):
@@ -56,6 +57,18 @@ def get_fastq(dir_path):
     glob_path_R1 = glob.glob(glob_path_R1)
     glob_path_R2 = glob.glob(glob_path_R2)
     logger.info("helper: Done globbing fastq.gz file")
-    return [''.join(glob_path_R1), ''.join(glob_path_R2)]
+    return ["".join(glob_path_R1), "".join(glob_path_R2)]
 
 
+def get_fastq_read_length(fastq_list):
+    logger.info("helper: getting the read length of each fastq file")
+    read_length_list = []
+    for fastq in fastq_list:
+        out = subprocess.Popen(
+            ["zcat", fastq, "|", "head", "-n 2", "|", "grep -v ^@"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        read_length = len(out)
+        read_length_list.append(read_length)
+    return read_length_list
