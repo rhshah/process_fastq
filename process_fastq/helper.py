@@ -69,6 +69,11 @@ def get_fastq_read_length(fastq_list):
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
         )
-        read_length = len(out)
+        stdout, stderr = out.communicate()
+        if(stderr is None):
+            read_length = len(stdout)
+        else:
+            logger.error("helper: could not calcualte the read for: %s", fastq)
+            exit(1)
         read_length_list.append(read_length)
     return read_length_list
