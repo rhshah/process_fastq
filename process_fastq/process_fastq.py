@@ -15,6 +15,7 @@ import os
 import logging
 import glob
 import json
+import pprint
 
 try:
     import pandas as pd
@@ -53,5 +54,5 @@ def run(sample_id, request_id, run_id, fastq_path, output_path, cutadapt_path):
         run_json['fastq_list'] = fastq_list
         logger.info("process_fastq: the fastq path files: %s",
                     fastq_list)
-    print(json.dump(run_json), sort_keys=True, indent=4)
+    pprint(run_json)
     return 0
