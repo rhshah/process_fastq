@@ -68,12 +68,13 @@ def get_fastq_read_length(fastq_list):
         out = subprocess.Popen(
             (cmd),
             stdin=subprocess.PIPE,
-            stdout=subprocess.STDOUT,
-            stderr=subprocess.STDERR,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
             shell=True
         )
         logger.debug("the commandline is {}".format(out.args))
         stdout, stderr = out.communicate()
+        stdout = stdout[1:-1]
         if(stderr is None):
             print("Read:", stdout)
             read_length = len(stdout)
