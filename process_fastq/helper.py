@@ -45,3 +45,14 @@ def make_path(path, run_id, request_id, sample_id):
     logger.info("helper: Finished making file path to search for files")
     return glob_path
 
+
+def get_fastq(path):
+    logger.info("helper: Globbing fastq.gz file")
+    glob_path_R1 = os.path.join(path, "*R1*.gz")
+    glob_path_R2 = os.path.join(path, "*R2*.gz")
+    glob_path_R1 = glob.glob(glob_path_R1)
+    glob_path_R2 = glob.glob(glob_path_R2)
+    logger.info("helper: Done globbing fastq.gz file")
+    return [glob_path_R1, glob_path_R2]
+
+
