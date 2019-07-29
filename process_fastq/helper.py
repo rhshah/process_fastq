@@ -43,7 +43,7 @@ def make_path(dir_path, run_id, request_id, sample_id):
     glob_path = os.path.join(dir_path, glob_run_id, glob_request_id, glob_sample_id)
     glob_path = glob.glob(glob_path)
     logger.info("helper: Finished making file path to search for files")
-    return glob_path
+    return ''.join(glob_path)
 
 
 def get_fastq(dir_path):
