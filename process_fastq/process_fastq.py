@@ -14,7 +14,7 @@ import sys
 import os
 import logging
 import glob
-from collections import OrderedDict
+from collections import defaultdict
 import pprint
 
 try:
@@ -44,7 +44,7 @@ def run(sample_id, request_id, run_id, fastq_path, output_path, cutadapt_path):
     logger.info("procees_fastq: fastq_path: %s", fastq_path)
     logger.info("procees_fastq: output_path: %s", output_path)
     logger.info("procees_fastq: cutadapt_path: %s", cutadapt_path)
-    run_dict = OrderedDict()
+    run_dict = defaultdict(dict)
     for id in run_id:
         glob_file_path = hp.make_path(fastq_path, id, request_id, sample_id)
         logger.info("process_fastq: the path to search for files: %s",
