@@ -50,6 +50,7 @@ def get_fastq(dir_path):
     logger.info("helper: Globbing fastq.gz file")
     R1_pattern = "*R1*.gz"
     R2_pattern = "*R2*.gz"
+    logger.debug("helper: Path to search for fastq: %s", dir_path)
     glob_path_R1 = os.path.join(dir_path, R1_pattern)
     glob_path_R2 = os.path.join(dir_path, R2_pattern)
     glob_path_R1 = glob.glob(glob_path_R1)
