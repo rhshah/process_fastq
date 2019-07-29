@@ -48,5 +48,5 @@ def run(sample_id, request_id, run_id, fastq_path, output_path, cutadapt_path):
         logger.info("process_fastq: the path to search for files: %s",
                     glob_file_path)
         path_list.append(glob_file_path)
-    print(path_list)
+    
     return 0

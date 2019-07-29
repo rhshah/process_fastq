@@ -14,6 +14,7 @@ Description: helper has many utilities for process_fastq
 import sys
 import os
 import logging
+import glob
 
 try:
     import pandas as pd
@@ -40,6 +41,7 @@ def make_path(path, run_id, request_id, sample_id):
     glob_request_id = "*" + request_id + "*"
     glob_sample_id = "*" + sample_id + "*"
     glob_path = os.path.join(path, glob_run_id, glob_request_id, glob_sample_id)
+    glob_path = glob.glob(glob_path)
     logger.info("helper: Finished making file path to search for files")
     return glob_path
 
