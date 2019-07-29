@@ -13,30 +13,40 @@ Description: main module for process_fastq
 import sys
 import os
 import logging
+import glob
 
 try:
     import pandas as pd
 except ImportError as e:
     print(
-        "process_fastq: pandas is not installed, please install pandas as it is one of the requirements."
+        "process_fastq: pandas is not installed, please install pandas as it \
+            is one of the requirements."
     )
     exit(1)
 try:
     import helper as hp
 except ImportError as e:
     print(
-        "process_fastq: helper module could not be loaded, please install package correctly to get this running."
+        "process_fastq: helper module could not be loaded, please install \
+            package correctly to get this running."
     )
     exit(1)
 
 # Making logging possible
-logger = logging.getLogger("pf.log")
+logger = logging.getLogger("process_fastq")
 
 
-def run(filename, fastq_path, output_path, cutadapt_path):
-    logger.info("Filename: %s", filename)
-    logger.info("fastq_path: %s", fastq_path)
-    logger.info("output_path: %s", output_path)
-    logger.info("cutadapt_path: %s", cutadapt_path)
-    hp.read_excel(filename)
+def run(sample_id, request_id, run_id, fastq_path, output_path, cutadapt_path):
+    logger.info("procees_fastq: sample id: %s", sample_id)
+    logger.info("procees_fastq: run id: %s", run_id)
+    logger.info("procees_fastq: fastq_path: %s", fastq_path)
+    logger.info("procees_fastq: output_path: %s", output_path)
+    logger.info("procees_fastq: cutadapt_path: %s", cutadapt_path)
+    path_list = []
+    for id in run_id:
+        glob_file_path = hp.make_path(fastq_path, id, request_id, sample_id)
+        logger.info("process_fastq: the path to search for files: %s",
+                    glob_file_path)
+        path_list.append(glob_file_path)
+    print(path_list)
     return 0
