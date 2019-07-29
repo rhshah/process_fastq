@@ -56,6 +56,6 @@ def get_fastq(dir_path):
     glob_path_R1 = glob.glob(glob_path_R1)
     glob_path_R2 = glob.glob(glob_path_R2)
     logger.info("helper: Done globbing fastq.gz file")
-    return [glob_path_R1, glob_path_R2]
+    return [''.join(glob_path_R1), ''.join(glob_path_R2)]
 
 
