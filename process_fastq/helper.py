@@ -69,8 +69,10 @@ def get_fastq_read_length(fastq_list):
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
         )
+        logger.debug("the commandline is {}".format(out.args))
         stdout, stderr = out.communicate()
         if(stderr is None):
+            print("Read:", stdout)
             read_length = len(stdout)
         else:
             logger.error("helper: could not calcualte the read for: %s", fastq)
