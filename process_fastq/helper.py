@@ -64,7 +64,7 @@ def get_fastq_read_length(fastq_list):
     logger.info("helper: getting the read length of each fastq file")
     read_length_list = []
     for fastq in fastq_list:
-        cmd = "zcat" + " " + fastq + " | head -n 2 | " + "grep -v ^@ | tr -d '\n'"
+        cmd = "zcat" + " " + fastq + " | head -n 2 | " + "grep -v ^@ | " + "tr -d " + "'\n'"
         out = subprocess.Popen(
             (cmd),
             stdin=subprocess.PIPE,
@@ -72,9 +72,8 @@ def get_fastq_read_length(fastq_list):
             stderr=subprocess.STDOUT,
             shell=True
         )
-        logger.debug("the commandline is {}".format(out.args))
+        logger.debug("the commandline is %s", cmd)
         stdout, stderr = out.communicate()
-        #stdout = stdout[1:-1]
         if(stderr is None):
             print("Read:", stdout)
             read_length = len(stdout)
