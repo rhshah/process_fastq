@@ -54,5 +54,5 @@ def run(sample_id, request_id, run_id, fastq_path, output_path, cutadapt_path):
         run_json['fastq_list'] = fastq_list
         logger.info("process_fastq: the fastq path files: %s",
                     fastq_list)
-    pprint(run_json)
+    pprint.pprint(run_json)
     return 0
