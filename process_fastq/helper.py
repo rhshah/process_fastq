@@ -31,9 +31,9 @@ logger = logging.getLogger("process_fastq")
 
 
 def read_excel(file):
-    logger.info("helper: Reading the excel file: %s", file)
+    logger.info("helper: make_path: Reading the excel file: %s", file)
     pdataframe = pd.read_excel(file, sheet_name=0, keep_default_na="True", index_col=0)
-    logger.info("helper: Finished reading excel file: %s", file)
+    logger.info("helper: make_path: Finished reading excel file: %s", file)
     return pdataframe
 
 
@@ -48,33 +48,34 @@ def make_path(dir_path, run_id, request_id, sample_id):
     glob_path = os.path.join(dir_path, glob_run_id, glob_request_id, glob_sample_id)
     logger.debug("helper: make_path: glob_path: %s", glob_path)
     glob_path = glob.glob(glob_path)
-    print("length of glob", len(glob_path))
-    for path in glob_path:
-        if ('A1' in path):
-            glob_path = [path,]
-            break
-        else:
-            continue
+    if len(glob_path) > 1:
+        for path in glob_path:
+            if ('A1' in path):
+                glob_path = [path,]
+                break
+            else:
+                logging.error("helper: make_path: Found multiple path in to fastq folder for sample %s, %s: ", sample_id, glob_path)
+                exit(1)
     logger.debug("helper: make_path: glob glob_path: %s", glob_path)
-    logger.info("helper: Finished making file path to search for files")
+    logger.info("helper: make_path: Finished making file path to search for files")
     return "".join(glob_path)
 
 
 def get_fastq(dir_path):
-    logger.info("helper: Globbing fastq.gz file")
+    logger.info("helper: get_fastq: Globbing fastq.gz file")
     R1_pattern = "*R1*.gz"
     R2_pattern = "*R2*.gz"
-    logger.debug("helper: Path to search for fastq: %s", dir_path)
+    logger.debug("helper: get_fastq: Path to search for fastq: %s", dir_path)
     glob_path_R1 = os.path.join(dir_path, R1_pattern)
     glob_path_R2 = os.path.join(dir_path, R2_pattern)
     glob_path_R1 = glob.glob(glob_path_R1)
     glob_path_R2 = glob.glob(glob_path_R2)
-    logger.info("helper: Done globbing fastq.gz file")
+    logger.info("helper: get_fastq: Done globbing fastq.gz file")
     return ["".join(glob_path_R1), "".join(glob_path_R2)]
 
 
 def get_fastq_read_length(fastq_list):
-    logger.info("helper: getting the read length of each fastq file")
+    logger.info("helper: get_fastq_read_length: getting the read length of each fastq file")
     read_length_list = []
     for fastq in fastq_list:
         cmd = (
@@ -94,14 +95,14 @@ def get_fastq_read_length(fastq_list):
             shell=True,
         )
         logger.debug(
-            "the commandline is %s", cmd.encode("unicode_escape").decode("utf-8")
+            "helper: get_fastq_read_length: the commandline is %s", cmd.encode("unicode_escape").decode("utf-8")
         )
         stdout, stderr = out.communicate()
         if stderr is None:
-            logger.debug("Read: %s", stdout)
+            logger.debug("helper: get_fastq_read_length: Read: %s", stdout)
             read_length = len(stdout)
         else:
-            logger.error("helper: could not calcualte the read for: %s", fastq)
+            logger.error("helper: get_fastq_read_length: could not calcualte the read for: %s", fastq)
             exit(1)
         read_length_list.append(read_length)
     return read_length_list
