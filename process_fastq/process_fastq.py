@@ -60,11 +60,12 @@ def run(sample_id, request_id, run_id, fastq_path, output_path, cutadapt_path):
     for a, b in itertools.combinations(store_read_length, 2):
         logger.info("Comparing read lengths: %s and %s", a, b)
         if a == b:
+            logger.info("Read lengths: %s and %s are same, trimming will not be performed", a, b)
             pass
         else:
             logger.critical("Read length are not the same: %s and %s", a, b)
             logger.critical(
-                "Cutadapt will be ran to make the read length match across runs"
+                "Trimming with cutadapt will be ran to make the read length match across runs"
             )
 
     # pprint.pprint(run_dict)
