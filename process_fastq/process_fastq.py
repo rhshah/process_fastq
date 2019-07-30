@@ -47,14 +47,13 @@ def run(sample_id, request_id, run_id, fastq_path, output_path, cutadapt_path):
     run_dict = defaultdict(dict)
     for id in run_id:
         glob_file_path = hp.make_path(fastq_path, id, request_id, sample_id)
-        logger.info("process_fastq: the path to search for files: %s",
-                    glob_file_path)
-        run_dict[id]['path'] = glob_file_path
+        logger.info("process_fastq: the path to search for files: %s", glob_file_path)
+        run_dict[id]["path"] = glob_file_path
         fastq_list = hp.get_fastq(glob_file_path)
-        run_dict[id]['fastq_list'] = fastq_list
-        logger.info("process_fastq: the fastq path files: %s",
-                    fastq_list)
+        run_dict[id]["fastq_list"] = fastq_list
+        logger.info("process_fastq: the fastq path files: %s", fastq_list)
         read_length_list = hp.get_fastq_read_length(fastq_list)
-        run_dict[id]['read_length'] = read_length_list
+        run_dict[id]["read_length"] = read_length_list
+    print("Value : %s" % dict.get('read_length'))
     pprint.pprint(run_dict)
     return 0
