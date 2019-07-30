@@ -16,6 +16,7 @@ import logging
 import glob
 from collections import defaultdict
 import pprint
+import itertools
 
 try:
     import pandas as pd
@@ -45,6 +46,7 @@ def run(sample_id, request_id, run_id, fastq_path, output_path, cutadapt_path):
     logger.info("procees_fastq: output_path: %s", output_path)
     logger.info("procees_fastq: cutadapt_path: %s", cutadapt_path)
     run_dict = defaultdict(dict)
+    store_read_length = []
     for id in run_id:
         glob_file_path = hp.make_path(fastq_path, id, request_id, sample_id)
         logger.info("process_fastq: the path to search for files: %s", glob_file_path)
@@ -54,9 +56,16 @@ def run(sample_id, request_id, run_id, fastq_path, output_path, cutadapt_path):
         logger.info("process_fastq: the fastq path files: %s", fastq_list)
         read_length_list = hp.get_fastq_read_length(fastq_list)
         run_dict[id]["read_length"] = read_length_list
-    
-    test_id = run_id[0] + ".read_length"
-    print("\n", test_id, "\n")
-    print("Value : %s" % hp.deep_get(run_dict, run_id[1] + ".read_length"))
-    pprint.pprint(run_dict)
+        store_read_length.append = read_length_list
+    for a, b in itertools.combinations(store_read_length, 2):
+        logger.info("Comparing read lengths: %s and %s", a, b)
+        if a == b:
+            pass
+        else:
+            logger.critical("Read length are not the same: %s and %s", a, b)
+            logger.critical(
+                "Cutadapt will be ran to make the read length match across runs"
+            )
+
+    # pprint.pprint(run_dict)
     return 0
