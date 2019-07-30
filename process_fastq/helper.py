@@ -16,6 +16,7 @@ import os
 import logging
 import glob
 import subprocess
+from functools import reduce
 
 try:
     import pandas as pd
@@ -92,3 +93,11 @@ def get_fastq_read_length(fastq_list):
             exit(1)
         read_length_list.append(read_length)
     return read_length_list
+
+
+def deep_get(dictionary, keys, default=None):
+    return reduce(
+        lambda d, key: d.get(key, default) if isinstance(d, dict) else default,
+        keys.split("."),
+        dictionary,
+    )
