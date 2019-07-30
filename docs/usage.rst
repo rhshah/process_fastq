@@ -34,7 +34,7 @@ Example commandline:
 
     .. code-block:: console
     
-       > process_fastq \
+       $ process_fastq \
        -p request_id \
        -s smaple_name \
        -r RunID \
