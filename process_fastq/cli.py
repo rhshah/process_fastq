@@ -43,14 +43,6 @@ except ImportError as e:
             correctly to get this running."
     )
     exit(1)
-try:
-    import helper as hp
-except ImportError as e:
-    print(
-        "cli: helper module could not be loaded, please install package \
-            correctly to get this running."
-    )
-    exit(1)
 
 # Making logging possible
 logger = logging.getLogger("process_fastq")
