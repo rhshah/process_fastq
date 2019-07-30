@@ -54,7 +54,9 @@ def run(sample_id, request_id, run_id, fastq_path, output_path, cutadapt_path):
         logger.info("process_fastq: the fastq path files: %s", fastq_list)
         read_length_list = hp.get_fastq_read_length(fastq_list)
         run_dict[id]["read_length"] = read_length_list
-    print("Value : %s" % hp.deep_get(run_id[0], run_id[0] + ".read_length"))
-    print("Value : %s" % hp.deep_get(run_id[1], run_id[1] + ".read_length"))
+    
+    test_id = run_id[0] + ".read_length"
+    print("Value : %s" % hp.deep_get(run_id[0], test_id))
+    #print("Value : %s" % hp.deep_get(run_id[1], run_id[1] + ".read_length"))
     pprint.pprint(run_dict)
     return 0
