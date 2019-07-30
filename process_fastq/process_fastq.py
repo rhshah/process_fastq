@@ -56,7 +56,7 @@ def run(sample_id, request_id, run_id, fastq_path, output_path, cutadapt_path):
         logger.info("process_fastq: the fastq path files: %s", fastq_list)
         read_length_list = hp.get_fastq_read_length(fastq_list)
         run_dict[id]["read_length"] = read_length_list
-        store_read_length.append = read_length_list
+        store_read_length.append(read_length_list)
     for a, b in itertools.combinations(store_read_length, 2):
         logger.info("Comparing read lengths: %s and %s", a, b)
         if a == b:

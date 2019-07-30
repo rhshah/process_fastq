@@ -86,7 +86,7 @@ def get_fastq_read_length(fastq_list):
         )
         stdout, stderr = out.communicate()
         if stderr is None:
-            print("Read:", stdout)
+            logger.debug("Read: %s", stdout)
             read_length = len(stdout)
         else:
             logger.error("helper: could not calcualte the read for: %s", fastq)
