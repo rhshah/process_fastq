@@ -56,7 +56,8 @@ def run(sample_id, request_id, run_id, fastq_path, output_path, cutadapt_path):
         run_dict[id]["read_length"] = read_length_list
     
     test_id = run_id[0] + ".read_length"
-    print(hp.deep_get(run_id[0], run_id[0]))
+    print("\n", test_id, "\n")
+    print(hp.deep_get(run_id[1], run_id[1]))
     #print("Value : %s" % hp.deep_get(run_id[1], run_id[1] + ".read_length"))
     pprint.pprint(run_dict)
     return 0
