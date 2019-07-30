@@ -48,6 +48,12 @@ def make_path(dir_path, run_id, request_id, sample_id):
     glob_path = os.path.join(dir_path, glob_run_id, glob_request_id, glob_sample_id)
     logger.debug("helper: make_path: glob_path: %s", glob_path)
     glob_path = glob.glob(glob_path)
+    for path in glob_path:
+        if ('A1' in path):
+            glob_path = [path,]
+            break
+        else:
+            continue
     logger.debug("helper: make_path: glob glob_path: %s", glob_path)
     logger.info("helper: Finished making file path to search for files")
     return "".join(glob_path)
