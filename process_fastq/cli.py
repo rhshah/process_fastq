@@ -48,8 +48,6 @@ except ImportError as e:
 logger = logging.getLogger("process_fastq")
 click_log.basic_config(logger)
 click_log.ColorFormatter.colors["info"] = dict(fg="green")
-click_log.ColorFormatter.colors["warning"] = dict(fg="purple")
-click_log.ColorFormatter.colors["error"] = dict(fg="red")
 
 
 @click.command()
