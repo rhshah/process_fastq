@@ -78,13 +78,13 @@ def run(
                     "process_fastq: read length for %s does not match the expected read length",
                     glob_file_path,
                 )
-                logger.warning("process_fastq: read length for %s is less then expected read lenght", glob_file_path)
+                logger.warning("process_fastq: read length for %s is less then expected read length", glob_file_path)
             else:
                 logger.critical(
                     "process_fastq: read length for %s does not match the expected read length",
                     glob_file_path,
                 )
-                logger.critical("process_fastq: read length for %s is more then expected read lenght", glob_file_path)
+                logger.critical("process_fastq: read length for %s is more then expected read length", glob_file_path)
                 logger.critical(
                     "process_fastq: trimming with cutadapt will be ran to make the read length match expected read length"
                 )
