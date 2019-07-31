@@ -50,7 +50,7 @@ click_log.basic_config(logger)
 click_log.ColorFormatter.colors["info"] = dict(fg="green")
 click_log.ColorFormatter.colors["warning"] = dict(fg="purple")
 click_log.ColorFormatter.colors["error"] = dict(fg="red")
-click_log.ColorFormatter.colors["critical"] = dict(fg="pink")
+click_log.ColorFormatter.colors["critical"] = dict(fg="darkred")
 click_log.ColorFormatter.colors["debug"] = dict(fg="yellow")
 
 
