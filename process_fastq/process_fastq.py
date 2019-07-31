@@ -73,7 +73,7 @@ def run(
                     "process_fastq: read length for %s matches expected read length",
                     glob_file_path,
                 )
-            else if(read_length_list[0] < expected_read_length):
+            elif(read_length_list[0] < expected_read_length):
                 logger.critical(
                     "process_fastq: read length for %s does not match the expected read length",
                     glob_file_path,
