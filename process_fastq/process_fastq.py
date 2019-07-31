@@ -39,12 +39,22 @@ except ImportError as e:
 logger = logging.getLogger("process_fastq")
 
 
-def run(sample_id, request_id, run_id, fastq_path, output_path, cutadapt_path):
+def run(
+    sample_id,
+    request_id,
+    run_id,
+    fastq_path,
+    expected_read_length,
+    output_path,
+    cutadapt_path,
+):
     logger.info("procees_fastq: sample id: %s", sample_id)
     logger.info("procees_fastq: run id: %s", run_id)
+    logger.info("procees_fastq: request id: %s", request_id)
     logger.info("procees_fastq: fastq_path: %s", fastq_path)
-    logger.info("procees_fastq: output_path: %s", output_path)
-    logger.info("procees_fastq: cutadapt_path: %s", cutadapt_path)
+    logger.info("procees_fastq: expected read length: %d", expected_read_length)
+    logger.info("procees_fastq: output path: %s", output_path)
+    logger.info("procees_fastq: cutadapt path: %s", cutadapt_path)
     run_dict = defaultdict(dict)
     store_read_length = []
     for id in run_id:
@@ -57,16 +67,28 @@ def run(sample_id, request_id, run_id, fastq_path, output_path, cutadapt_path):
         read_length_list = hp.get_fastq_read_length(fastq_list)
         run_dict[id]["read_length"] = read_length_list
         store_read_length.append(read_length_list)
-    for a, b in itertools.combinations(store_read_length, 2):
-        logger.info("Comparing read lengths: %s and %s", a, b)
-        if a == b:
-            logger.info("Read lengths: %s and %s are same, trimming will not be performed", a, b)
-            pass
+        if hp.all_same(read_length_list):
+            if read_length_list[0] == expected_read_length:
+                logger.info(
+                    "process_fastq: read length for %s matches expected read length",
+                    glob_file_path,
+                )
+            else if(read_length_list[0] < expected_read_length):
+                logger.critical(
+                    "process_fastq: read length for %s does not match the expected read length",
+                    glob_file_path,
+                )
+                logger.warning("process_fastq: read length for %s is less then expected read lenght", glob_file_path)
+            else:
+                logger.critical(
+                    "process_fastq: read length for %s does not match the expected read length",
+                    glob_file_path,
+                )
+                logger.critical("process_fastq: read length for %s is more then expected read lenght", glob_file_path)
+                logger.critical(
+                    "process_fastq: trimming with cutadapt will be ran to make the read length match expected read length"
+                )
         else:
-            logger.critical("Read length are not the same: %s and %s", a, b)
-            logger.critical(
-                "Trimming with cutadapt will be ran to make the read length match across runs"
-            )
-
-    # pprint.pprint(run_dict)
+            logger.error("process_fastq: read length for read1 (R1) and read2 (R2) with %s does not match this is not expected", fastq_list)
+            exit(1)
     return 0

@@ -50,6 +50,7 @@ click_log.basic_config(logger)
 click_log.ColorFormatter.colors["info"] = dict(fg="green")
 click_log.ColorFormatter.colors["warning"] = dict(fg="purple")
 click_log.ColorFormatter.colors["error"] = dict(fg="red")
+click_log.ColorFormatter.colors["critical"] = dict(fg="pink")
 click_log.ColorFormatter.colors["debug"] = dict(fg="yellow")
 
 
@@ -97,9 +98,25 @@ click_log.ColorFormatter.colors["debug"] = dict(fg="yellow")
     type=click.Path(exists=True),
     help="Full path to location of cutadapt executable",
 )
+@click.option(
+    "--expected-read-length",
+    "-l",
+    required=False,
+    default=101,
+    type=click.INT,
+    help="Expected read length from the fastq file",
+)
 @click.version_option(version=__version__, prog_name="process_fastq")
 @click_log.simple_verbosity_option(logger)
-def main(sample_id, request_id, run_id, fastq_path, output_path, cutadapt_path):
+def main(
+    sample_id,
+    request_id,
+    run_id,
+    fastq_path,
+    expected_read_length,
+    output_path,
+    cutadapt_path,
+):
     logger_output = output_path + "process_fastq.log"
     fh = logging.FileHandler(logger_output)
     formatter = logging.Formatter(
@@ -108,7 +125,15 @@ def main(sample_id, request_id, run_id, fastq_path, output_path, cutadapt_path):
     )
     fh.setFormatter(formatter)
     logger.addHandler(fh)
-    pf.run(sample_id, request_id, run_id, fastq_path, output_path, cutadapt_path)
+    pf.run(
+        sample_id,
+        request_id,
+        run_id,
+        fastq_path,
+        expected_read_length,
+        output_path,
+        cutadapt_path,
+    )
     return 0
 
 
