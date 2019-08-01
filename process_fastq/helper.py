@@ -64,7 +64,10 @@ def make_path(dir_path, run_id, request_id, sample_id):
                 exit(1)
     logger.debug("helper: make_path: glob glob_path: %s", glob_path)
     logger.info("helper: make_path: Finished making file path to search for files")
-    return "".join(glob_path)
+    if(run_id is None and request_id is None):
+        return glob_path
+    else:
+        return "".join(glob_path)
 
 
 def get_fastq(dir_path):
