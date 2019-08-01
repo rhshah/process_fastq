@@ -17,7 +17,8 @@ import logging
 import glob
 import subprocess
 from functools import reduce
-
+import re
+import pathlib
 try:
     import pandas as pd
 except ImportError as e:
@@ -85,6 +86,31 @@ def make_path(dir_path, run_id, request_id, sample_id):
                 "helper: make_path: could not fid the fastq files for: %s", sample_id
             )
             exit(1)
+        logger.debug("helper: make_path: Removing paths matching A* paths")
+        a_pattern = re.compile('_A\d{1}\/')
+        logger.debug("helper: make_path: Searching for following pattern %s", a_pattern)
+        a_path = [m_path for idx, m_path in enumerate(glob_path) if re.search(a_pattern, str(m_path))]
+        logger.debug("helper: make_path: Paths matching the pattern %s", a_path)
+        a_values = [a_pattern.search(str(m_path)).group() for idx, m_path in enumerate(glob_path) if re.search(a_pattern, str(m_path))]
+        logger.debug("helper: make_path: Type of values matching the pattern %s", a_values)
+        glob_path_copy = glob_path.copy()
+        for idx, m_path in glob_path_copy:
+            if re.search(a_pattern, m_path):
+                logger.info("helper: make_path: Paths matching the pattern %s", m_path)
+                next
+            else:
+                logger.info("helper: make_path: Paths not matching the pattern %s", m_path)
+                logger.info("helper: make_path: We will now compare and try to keep only paths that have the patterns")
+                p_path = pathlib.Path(m_path)
+                for m_pattern in a_values:
+                    m_pattern = m_pattern[:-1]
+                    s_id = p_path.name
+                    c_path = pathlib.Path.home().joinpath(ppath.parent.parent + m_pattern + s_id)
+                    if(cpath in glob_path):
+                        logger.info("helper: make_path: Path exists as A* pattern also, thus we will delete it")
+                        del glob_path[idx]
+                    else:
+                        next
     else:
         glob_path = glob.glob(glob_path, recursive=True)
         if len(glob_path) > 1:

@@ -151,7 +151,7 @@ def run(
     else:
         glob_file_path = hp.make_path(fastq_path, run_id, request_id, sample_id)
         logger.info("process_fastq: the path to search for files: %s", glob_file_path)
-        print("glob_file_path",glob_file_path)
+        print("glob_file_path", glob_file_path)
         """ run_dict[id]["path"] = glob_file_path
         fastq_list = hp.get_fastq(glob_file_path)
         run_dict[id]["fastq_list"] = fastq_list
