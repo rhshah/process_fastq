@@ -78,8 +78,8 @@ def make_path(dir_path, run_id, request_id, sample_id):
         )
         stdout, stderr = out.communicate()
         if stderr is None:
-            logger.debug("helper: make_path: Read: %s", stdout)
-            glob_path = stdout
+            logger.debug("helper: make_path: Read: %s", stdout.decode("utf-8"))
+            glob_path = stdout.decode("utf-8").split('\n')[:-1]
         else:
             logger.error(
                 "helper: make_path: could not fid the fastq files for: %s", sample_id
@@ -148,7 +148,7 @@ def get_fastq_read_length(fastq_list):
         )
         stdout, stderr = out.communicate()
         if stderr is None:
-            logger.debug("helper: get_fastq_read_length: Read: %s", stdout)
+            logger.debug("helper: get_fastq_read_length: Read: %s", stdout.decode("utf-8"))
             read_length = len(stdout)
         else:
             logger.error(
