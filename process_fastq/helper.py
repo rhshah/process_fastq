@@ -53,12 +53,22 @@ def make_path(dir_path, run_id, request_id, sample_id):
     logger.debug("helper: make_path: glob_sample_id: %s", glob_sample_id)
     glob_path = os.path.join(dir_path, glob_run_id, glob_request_id, glob_sample_id)
     logger.debug("helper: make_path: glob_path: %s", glob_path)
-    
+
     """
     find /ifs/archive/GCL/hiseq/FASTQ/ -maxdepth 3 -type d -name "*MSK-ML-0055-03-5001542C*"
     """
     if run_id is None and request_id is None:
+        logger.warning(
+            "helper: make_path: As run id and request id are not provided we will use find to get fastq directories."
+        )
+        logger.warning(
+            "helper: make_path: Please be aware that this will take significantly longer to run."
+        }
         cmd = "find " + fastq_path + " -maxdepth 3 -type d -name " + "glob_sample_id"
+        logger.debug(
+            "helper: make_path: the commandline is %s",
+            cmd.encode("unicode_escape").decode("utf-8"),
+        )
         out = subprocess.Popen(
             (cmd),
             stdin=subprocess.PIPE,
@@ -66,18 +76,13 @@ def make_path(dir_path, run_id, request_id, sample_id):
             stderr=subprocess.STDOUT,
             shell=True,
         )
-        logger.debug(
-            "helper: get_fastq_read_length: the commandline is %s",
-            cmd.encode("unicode_escape").decode("utf-8"),
-        )
         stdout, stderr = out.communicate()
         if stderr is None:
             logger.debug("helper: make_path: Read: %s", stdout)
             glob_path = stdout
         else:
             logger.error(
-                "helper: make_path: could not fid the fastq files for: %s",
-                sample_id,
+                "helper: make_path: could not fid the fastq files for: %s", sample_id
             )
             exit(1)
     else:
@@ -130,16 +135,16 @@ def get_fastq_read_length(fastq_list):
             + "tr -d "
             + "'\n'"
         )
+        logger.debug(
+            "helper: get_fastq_read_length: the commandline is %s",
+            cmd.encode("unicode_escape").decode("utf-8"),
+        )
         out = subprocess.Popen(
             (cmd),
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             shell=True,
-        )
-        logger.debug(
-            "helper: get_fastq_read_length: the commandline is %s",
-            cmd.encode("unicode_escape").decode("utf-8"),
         )
         stdout, stderr = out.communicate()
         if stderr is None:
