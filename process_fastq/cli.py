@@ -61,14 +61,12 @@ click_log.ColorFormatter.colors["info"] = dict(fg="green")
 @click.option(
     "--request-id",
     "-p",
-    required=True,
     type=click.STRING,
     help="IGO request id to get the fastq files. (eg:-p Project_05500_GB or -p 05500_GB)",
 )
 @click.option(
     "--run-id",
     "-r",
-    required=True,
     multiple=True,
     type=click.STRING,
     help="Run id to get the fastq files, can be specified multiple times (eg:-r PITT_0376 -r PITT_0378)",
@@ -106,12 +104,12 @@ click_log.ColorFormatter.colors["info"] = dict(fg="green")
 @click_log.simple_verbosity_option(logger)
 def main(
     sample_id,
-    request_id,
-    run_id,
     fastq_path,
     expected_read_length,
     output_path,
     cutadapt_path,
+    request_id=None,
+    run_id=None
 ):
     logger_output = output_path + "process_fastq.log"
     fh = logging.FileHandler(logger_output)
