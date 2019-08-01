@@ -53,10 +53,35 @@ def make_path(dir_path, run_id, request_id, sample_id):
     logger.debug("helper: make_path: glob_sample_id: %s", glob_sample_id)
     glob_path = os.path.join(dir_path, glob_run_id, glob_request_id, glob_sample_id)
     logger.debug("helper: make_path: glob_path: %s", glob_path)
-    glob_path = glob.glob(glob_path, recursive=True)
+    
+    """
+    find /ifs/archive/GCL/hiseq/FASTQ/ -maxdepth 3 -type d -name "*MSK-ML-0055-03-5001542C*"
+    """
     if run_id is None and request_id is None:
-        pass
+        cmd = "find " + fastq_path + " -maxdepth 3 -type d -name " + "glob_sample_id"
+        out = subprocess.Popen(
+            (cmd),
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            shell=True,
+        )
+        logger.debug(
+            "helper: get_fastq_read_length: the commandline is %s",
+            cmd.encode("unicode_escape").decode("utf-8"),
+        )
+        stdout, stderr = out.communicate()
+        if stderr is None:
+            logger.debug("helper: make_path: Read: %s", stdout)
+            glob_path = stdout
+        else:
+            logger.error(
+                "helper: make_path: could not fid the fastq files for: %s",
+                sample_id,
+            )
+            exit(1)
     else:
+        glob_path = glob.glob(glob_path, recursive=True)
         if len(glob_path) > 1:
             for path in glob_path:
                 if "A1" in path:
