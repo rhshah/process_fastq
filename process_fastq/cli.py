@@ -127,8 +127,8 @@ def main(
         expected_read_length,
         output_path,
         cutadapt_path,
-        request_id=None,
-        run_id=None,
+        request_id,
+        run_id,
     )
     return 0
 
