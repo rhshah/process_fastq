@@ -19,6 +19,7 @@ import subprocess
 from functools import reduce
 import re
 import pathlib
+from collections import defaultdict
 try:
     import pandas as pd
 except ImportError as e:
@@ -86,45 +87,50 @@ def make_path(dir_path, run_id, request_id, sample_id):
                 "helper: make_path: could not fid the fastq files for: %s", sample_id
             )
             exit(1)
-        logger.debug("helper: make_path: Removing paths matching A* paths")
-        a_pattern = re.compile('_A\d{1}\/')
-        logger.debug("helper: make_path: Searching for following pattern %s", a_pattern)
-        a_path = [m_path for idx, m_path in enumerate(glob_path) if re.search(a_pattern, str(m_path))]
-        logger.debug("helper: make_path: Paths matching the pattern %s", a_path)
-        a_values = [a_pattern.search(str(m_path)).group() for idx, m_path in enumerate(glob_path) if re.search(a_pattern, str(m_path))]
-        logger.debug("helper: make_path: Type of values matching the pattern %s", a_values)
-        glob_path_copy = glob_path.copy()
-        for idx, m_path in glob_path_copy:
-            if re.search(a_pattern, m_path):
-                logger.info("helper: make_path: Paths matching the pattern %s", m_path)
-                next
+        ext_project_id = []
+        ext_run_dict = defaultdict(list)
+        for m_path in glob_path:
+            p_path = pathlib.Path(m_path)
+            e_run_id = pathlib.Path(p_path.parent.parent.name)
+            a_pattern = re.compile('_A\d{1}$')
+            if re.search(a_pattern, str(e_run_id)):
+                e_run_id = re.sub(a_pattern.search(str(e_run_id)).group(), '', e_run_id)
             else:
-                logger.info("helper: make_path: Paths not matching the pattern %s", m_path)
-                logger.info("helper: make_path: We will now compare and try to keep only paths that have the patterns")
-                p_path = pathlib.Path(m_path)
-                for m_pattern in a_values:
-                    m_pattern = m_pattern[:-1]
-                    s_id = p_path.name
-                    c_path = pathlib.Path.home().joinpath(ppath.parent.parent + m_pattern + s_id)
-                    if(cpath in glob_path):
-                        logger.info("helper: make_path: Path exists as A* pattern also, thus we will delete it")
-                        del glob_path[idx]
-                    else:
-                        next
+                pass
+            ext_run_dict[e_run_id].append(m_path)
+            e_project_id = pathlib.Path(p_path.parent.name)
+            if e_project_id in ext_project_id:
+                pass
+            else:
+                ext_project_id.append(e_project_id)
+        if(len(ext_project_id) > 1):
+            logger.error("helper: make_path: the sample id belongs to multiple project, please provide a unique sample id")
+            exit(1)
+        glob_path = []
+        for m_id, m_path in ext_run_dict:
+            sort_m_path = sorted(m_path)
+            glob_path.append(sort_m_path.pop())
     else:
         glob_path = glob.glob(glob_path, recursive=True)
         if len(glob_path) > 1:
-            for path in glob_path:
-                if "A1" in path:
-                    glob_path = [path]
-                    break
+            ext_project_id = []
+            ext_run_dict = defaultdict(list)
+            for m_path in glob_path:
+                p_path = pathlib.Path(m_path)
+                e_run_id = pathlib.Path(p_path.parent.parent.name)
+                a_pattern = re.compile('_A\d{1}$')
+                if re.search(a_pattern, str(e_run_id)):
+                    e_run_id = re.sub(a_pattern.search(str(e_run_id)).group(), '', e_run_id)
                 else:
-                    logging.error(
-                        "helper: make_path: Found multiple path in to fastq folder for sample %s, %s: ",
-                        sample_id,
-                        glob_path,
-                    )
-                    exit(1)
+                    pass
+                ext_run_dict[e_run_id].append(m_path)
+                e_project_id = pathlib.Path(p_path.parent.name)
+                if e_project_id in ext_project_id:
+                    pass
+                else:
+                    ext_project_id.append(e_project_id)
+        else:
+            pass
     logger.debug("helper: make_path: glob glob_path: %s", glob_path)
     logger.info("helper: make_path: Finished making file path to search for files")
     if run_id is None and request_id is None:
