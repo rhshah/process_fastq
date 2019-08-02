@@ -136,11 +136,4 @@ def main(
 
 
 if __name__ == "__main__":
-    import time
-    import logging
-    logger = logging.getLogger("process_fastq")
-    start_time = time.time()
-    main()
-    end_time = time.time()
-    totaltime = end_time - start_time
-    logger.info("iAnnotateSV: Elapsed time was %g seconds",totaltime)
+    print(timeit.timeit("main()", globals=globals()))
