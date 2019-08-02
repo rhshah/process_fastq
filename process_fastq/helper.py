@@ -49,7 +49,7 @@ def make_path(dir_path, run_id, request_id, sample_id):
     if request_id:
         glob_request_id = "*" + request_id + "*"
     else:
-        glob_request_id = "**"
+        glob_request_id = "*Proj*"
     logger.debug("helper: make_path: glob_request_id: %s", glob_request_id)
     glob_sample_id = "*" + sample_id + "*"
     logger.debug("helper: make_path: glob_sample_id: %s", glob_sample_id)
@@ -66,7 +66,7 @@ def make_path(dir_path, run_id, request_id, sample_id):
         logger.warning(
             "helper: make_path: Please be aware that this will take significantly longer to run."
         )
-        cmd = "find " + dir_path + " -maxdepth 3 -type d -name " + "\"" + glob_sample_id + "\"" + " 2>&1 | grep -v " + "\"Permission denied\""
+        cmd = "find " + glob_path + " -maxdepth 1 -type d -name " + "\"" + glob_sample_id + "\"" + " 2>&1 | grep -v " + "\"Permission denied\""
         logger.debug(
             "helper: make_path: the commandline is %s",
             cmd.encode("unicode_escape").decode("utf-8"),
@@ -94,7 +94,7 @@ def make_path(dir_path, run_id, request_id, sample_id):
             e_run_id = pathlib.Path(p_path.parent.parent.name)
             a_pattern = re.compile('_A\d{1}$')
             if re.search(a_pattern, str(e_run_id)):
-                e_run_id = re.sub(a_pattern.search(str(e_run_id)).group(), '', e_run_id)
+                e_run_id = re.sub(str(a_pattern.search(str(e_run_id)).group()), '', e_run_id)
             else:
                 pass
             ext_run_dict[e_run_id].append(m_path)
