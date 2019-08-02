@@ -41,12 +41,12 @@ logger = logging.getLogger("process_fastq")
 
 def run(
     sample_id,
-    request_id,
-    run_id,
     fastq_path,
     expected_read_length,
     output_path,
     cutadapt_path,
+    request_id=None,
+    run_id=None,
 ):
     logger.info("procees_fastq: sample id: %s", sample_id)
     logger.info("procees_fastq: run id: %s", run_id)

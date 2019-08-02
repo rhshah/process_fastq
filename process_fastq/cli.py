@@ -123,12 +123,12 @@ def main(
     logger.addHandler(fh)
     pf.run(
         sample_id,
-        request_id,
-        run_id,
         fastq_path,
         expected_read_length,
         output_path,
         cutadapt_path,
+        request_id=None,
+        run_id=None,
     )
     return 0
 
