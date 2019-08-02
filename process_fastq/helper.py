@@ -99,7 +99,7 @@ def make_path(dir_path, run_id, request_id, sample_id):
             else:
                 pass
             ext_run_dict[e_run_id].append(m_path)
-            e_project_id = pathlib.Path(p_path.parent.name)
+            e_project_id = p_path.parent.name
             if e_project_id in ext_project_id:
                 pass
             else:
@@ -119,14 +119,14 @@ def make_path(dir_path, run_id, request_id, sample_id):
             ext_run_dict = defaultdict(list)
             for m_path in glob_path:
                 p_path = pathlib.Path(m_path)
-                e_run_id = pathlib.Path(p_path.parent.parent.name)
+                e_run_id = p_path.parent.parent.name
                 a_pattern = re.compile('_A\d{1}$')
                 if re.search(a_pattern, str(e_run_id)):
                     e_run_id = re.sub(str(a_pattern.search(str(e_run_id)).group()), '', e_run_id)
                 else:
                     pass
                 ext_run_dict[e_run_id].append(m_path)
-                e_project_id = pathlib.Path(p_path.parent.name)
+                e_project_id = p_path.parent.name
                 if e_project_id in ext_project_id:
                     pass
                 else:
