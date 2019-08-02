@@ -107,7 +107,7 @@ def make_path(dir_path, run_id, request_id, sample_id):
         if(len(ext_project_id) > 1):
             logger.error("helper: make_path: the sample id belongs to multiple project, please provide a unique sample id")
             exit(1)
-        pprint.pprint(ext_run_dict)
+        #pprint.pprint(ext_run_dict)
         glob_path = []
         for m_id, m_path in ext_run_dict.items():
             sort_m_path = sorted(m_path)
@@ -131,6 +131,10 @@ def make_path(dir_path, run_id, request_id, sample_id):
                     pass
                 else:
                     ext_project_id.append(e_project_id)
+            glob_path = []
+            for m_id, m_path in ext_run_dict.items():
+                sort_m_path = sorted(m_path)
+                glob_path.append(sort_m_path.pop())
         else:
             pass
     logger.debug("helper: make_path: glob glob_path: %s", glob_path)
