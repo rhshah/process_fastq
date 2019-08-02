@@ -122,7 +122,7 @@ def make_path(dir_path, run_id, request_id, sample_id):
                 e_run_id = pathlib.Path(p_path.parent.parent.name)
                 a_pattern = re.compile('_A\d{1}$')
                 if re.search(a_pattern, str(e_run_id)):
-                    e_run_id = re.sub(a_pattern.search(str(e_run_id)).group(), '', e_run_id)
+                    e_run_id = re.sub(str(a_pattern.search(str(e_run_id)).group()), '', e_run_id)
                 else:
                     pass
                 ext_run_dict[e_run_id].append(m_path)
