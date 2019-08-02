@@ -208,3 +208,12 @@ def deep_get(dictionary, keys, default=None):
 
 def all_same(items):
     return all(x == items[0] for x in items)
+
+
+def is_empty(any_structure):
+    if any_structure:
+        logger.info('helper: all_same: Structure is not empty.' any_structure)
+        return False
+    else:
+        logger.info('helper: all_same: Structure is empty.')
+        return True
