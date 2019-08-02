@@ -1,24 +1,8 @@
 # -*- coding: utf-8 -*-
 
-"""
-cli
-~~~~~~~~~~~~~~~
-:Description: console script for running process_fastq
-"""
-"""
-Created on July 26, 2019
-Description: console script for running process_fastq
-@author: Ronak H Shah
-"""
-__all__ = []
-__version_info__ = ("0", "1", "0")
-__version__ = ".".join(__version_info__)
-__date__ = "2019-07-27"
-__updated__ = "2019-07-28"
-
 import sys
 import logging
-
+import time
 try:
     import click
 except ImportError as e:
@@ -43,6 +27,24 @@ except ImportError as e:
             correctly to get this running."
     )
     exit(1)
+
+"""
+cli
+~~~~~~~~~~~~~~~
+:Description: console script for running process_fastq
+"""
+"""
+Created on July 26, 2019
+Description: console script for running process_fastq
+@author: Ronak H Shah
+"""
+
+__all__ = []
+__version_info__ = ("0", "1", "0")
+__version__ = ".".join(__version_info__)
+__date__ = "2019-07-27"
+__updated__ = "2019-07-28"
+
 
 # Making logging possible
 logger = logging.getLogger("process_fastq")
@@ -134,4 +136,8 @@ def main(
 
 
 if __name__ == "__main__":
+    start.time = time.time()
     sys.exit(main())
+    end_time = time.time()
+    logging.info("iAnnotateSV: Elapsed time was %g seconds",
+                 (end_time - start_time))
