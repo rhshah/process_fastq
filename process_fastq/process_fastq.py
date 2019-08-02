@@ -27,7 +27,7 @@ except ImportError as e:
     )
     exit(1)
 try:
-    import helper as hp
+    import process_fastq.helper as hp
 except ImportError as e:
     print(
         "process_fastq: helper module could not be loaded, please install \
