@@ -136,6 +136,9 @@ def main(
 
 
 if __name__ == "__main__":
+    import time
+    import logging
+    logger = logging.getLogger("process_fastq")
     start_time = time.time()
     main()
     end_time = time.time()
