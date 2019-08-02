@@ -72,7 +72,7 @@ def run(
     store_read_length = []
     if run_id and request_id:
         for id in run_id:
-            glob_file_path = gdp.make_path(fastq_path, sample_id ,id, request_id)
+            glob_file_path = gdp.make_path(fastq_path, sample_id, id, request_id)
             logger.info(
                 "process_fastq: the path to search for files: %s", glob_file_path
             )
