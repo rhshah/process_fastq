@@ -57,7 +57,7 @@ def make_path(dir_path, run_id, request_id, sample_id):
     logger.debug("helper: make_path: glob_path: %s", glob_path)
 
     """
-    find /ifs/archive/GCL/hiseq/FASTQ/ -maxdepth 3 -type d -name "*MSK-ML-0055-03-5001542C*"
+    find /ifs/archive/GCL/hiseq/FASTQ/ -maxdepth 3 -type d -name "*MSK-ML-0055-03-5001542C*" 2>&1 | grep -v "Permission denied"
     """
     if run_id is None and request_id is None:
         logger.warning(
@@ -66,7 +66,7 @@ def make_path(dir_path, run_id, request_id, sample_id):
         logger.warning(
             "helper: make_path: Please be aware that this will take significantly longer to run."
         )
-        cmd = "find " + dir_path + " -maxdepth 3 -type d -name " + glob_sample_id
+        cmd = "find " + dir_path + " -maxdepth 3 -type d -name " + glob_sample_id + " 2>&1 | grep -v " + "Permission denied"
         logger.debug(
             "helper: make_path: the commandline is %s",
             cmd.encode("unicode_escape").decode("utf-8"),
