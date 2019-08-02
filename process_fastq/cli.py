@@ -61,12 +61,14 @@ click_log.ColorFormatter.colors["info"] = dict(fg="green")
 @click.option(
     "--request-id",
     "-p",
+    default=None,
     type=click.STRING,
     help="IGO request id to get the fastq files. (eg:-p Project_05500_GB or -p 05500_GB)",
 )
 @click.option(
     "--run-id",
     "-r",
+    default=None,
     multiple=True,
     type=click.STRING,
     help="Run id to get the fastq files, can be specified multiple times (eg:-r PITT_0376 -r PITT_0378)",
