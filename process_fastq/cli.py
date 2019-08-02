@@ -123,6 +123,11 @@ def main(
     )
     fh.setFormatter(formatter)
     logger.addHandler(fh)
+    logger.info("==================================================")
+    logger.info(">>> Running process_fastq for: %s <<<", sample_id)
+    logger.info("==================================================")
+    t1_start = time.perf_counter()
+    t2_start = time.process_time()
     pf.run(
         sample_id,
         fastq_path,
@@ -132,8 +137,14 @@ def main(
         request_id,
         run_id,
     )
+    t1_stop = time.perf_counter()
+    t2_stop = time.process_time()
+    logger.info("--------------------------------------------------")
+    logger.info("Elapsed time: %.1f [min]" % ((t1_stop-t1_start)/60))
+    logger.info("CPU process time: %.1f [min]" % ((t2_stop-t2_start)/60))
+    logger.info("--------------------------------------------------") 
     return 0
 
 
 if __name__ == "__main__":
-    print(timeit.timeit("main()", globals=globals()))
+    sys.exit(main())
