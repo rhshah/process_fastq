@@ -139,5 +139,6 @@ if __name__ == "__main__":
     start_time = time.time()
     exit_code = main()
     end_time = time.time()
-    logging.info("iAnnotateSV: Elapsed time was %g seconds",(end_time - start_time))
+    totaltime = end_time - start_time
+    logger.info("iAnnotateSV: Elapsed time was %g seconds",totaltime)
     sys.exit(exit_code)
