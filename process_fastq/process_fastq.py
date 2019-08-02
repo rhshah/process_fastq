@@ -57,9 +57,9 @@ def run(
     request_id=None,
     run_id=None,
 ):
-    if(hp.is_empty(request_id)):
+    if hp.is_empty(request_id):
         request_id = None
-    if(hp.is_empty(run_id)):
+    if hp.is_empty(run_id):
         run_id = None
     logger.info("procees_fastq: sample id: %s", sample_id)
     logger.info("procees_fastq: run id: %s", run_id)
