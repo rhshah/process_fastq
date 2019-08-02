@@ -50,7 +50,16 @@ def make_path(dir_path, sample_id, run_id, request_id):
         logger.warning(
             "helper: make_path: Please be aware that this will take significantly longer to run."
         )
-        cmd = "find " + glob_path + " -maxdepth 1 -type d -name " + "\"" + glob_sample_id + "\"" + " 2>&1 | grep -v " + "\"Permission denied\""
+        cmd = (
+            "find "
+            + glob_path
+            + " -maxdepth 1 -type d -name "
+            + '"'
+            + glob_sample_id
+            + '"'
+            + " 2>&1 | grep -v "
+            + '"Permission denied"'
+        )
         logger.debug(
             "helper: make_path: the commandline is %s",
             cmd.encode("unicode_escape").decode("utf-8"),
@@ -65,7 +74,7 @@ def make_path(dir_path, sample_id, run_id, request_id):
         stdout, stderr = out.communicate()
         if stderr is None:
             logger.debug("helper: make_path: Read: %s", stdout.decode("utf-8"))
-            glob_path = stdout.decode("utf-8").split('\n')[:-1]
+            glob_path = stdout.decode("utf-8").split("\n")[:-1]
         else:
             logger.error(
                 "helper: make_path: could not fid the fastq files for: %s", sample_id
@@ -76,9 +85,11 @@ def make_path(dir_path, sample_id, run_id, request_id):
         for m_path in glob_path:
             p_path = pathlib.Path(m_path)
             e_run_id = p_path.parent.parent.name
-            a_pattern = re.compile('_A\d{1}$')
+            a_pattern = re.compile("_A\d{1}$")
             if re.search(a_pattern, str(e_run_id)):
-                e_run_id = re.sub(str(a_pattern.search(str(e_run_id)).group()), '', e_run_id)
+                e_run_id = re.sub(
+                    str(a_pattern.search(str(e_run_id)).group()), "", e_run_id
+                )
             else:
                 pass
             ext_run_dict[e_run_id].append(m_path)
@@ -87,8 +98,10 @@ def make_path(dir_path, sample_id, run_id, request_id):
                 pass
             else:
                 ext_project_id.append(e_project_id)
-        if(len(ext_project_id) > 1):
-            logger.error("helper: make_path: the sample id belongs to multiple project, please provide a unique sample id")
+        if len(ext_project_id) > 1:
+            logger.error(
+                "helper: make_path: the sample id belongs to multiple project, please provide a unique sample id"
+            )
             exit(1)
         glob_path = []
         for m_id, m_path in ext_run_dict.items():
@@ -102,9 +115,11 @@ def make_path(dir_path, sample_id, run_id, request_id):
             for m_path in glob_path:
                 p_path = pathlib.Path(m_path)
                 e_run_id = p_path.parent.parent.name
-                a_pattern = re.compile('_A\d{1}$')
+                a_pattern = re.compile("_A\d{1}$")
                 if re.search(a_pattern, str(e_run_id)):
-                    e_run_id = re.sub(str(a_pattern.search(str(e_run_id)).group()), '', e_run_id)
+                    e_run_id = re.sub(
+                        str(a_pattern.search(str(e_run_id)).group()), "", e_run_id
+                    )
                 else:
                     pass
                 ext_run_dict[e_run_id].append(m_path)

@@ -2,6 +2,7 @@
 
 import logging
 from functools import reduce
+
 try:
     import pandas as pd
 except ImportError as e:
@@ -46,8 +47,8 @@ def all_same(items):
 
 def is_empty(any_structure):
     if any_structure:
-        logger.info('helper: all_same: Structure is not empty.', any_structure)
+        logger.info("helper: all_same: Structure is not empty.", any_structure)
         return False
     else:
-        logger.info('helper: all_same: Structure is empty.')
+        logger.info("helper: all_same: Structure is empty.")
         return True

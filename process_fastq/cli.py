@@ -3,6 +3,7 @@
 import sys
 import logging
 import time
+
 try:
     import click
 except ImportError as e:
@@ -140,9 +141,9 @@ def main(
     t1_stop = time.perf_counter()
     t2_stop = time.process_time()
     logger.info("--------------------------------------------------")
-    logger.info("Elapsed time: %.1f [min]" % ((t1_stop-t1_start)/60))
-    logger.info("CPU process time: %.1f [min]" % ((t2_stop-t2_start)/60))
-    logger.info("--------------------------------------------------") 
+    logger.info("Elapsed time: %.1f [min]" % ((t1_stop - t1_start) / 60))
+    logger.info("CPU process time: %.1f [min]" % ((t2_stop - t2_start) / 60))
+    logger.info("--------------------------------------------------")
     return 0
 
 
