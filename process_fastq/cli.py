@@ -111,7 +111,7 @@ def main(
     output_path,
     cutadapt_path,
     request_id=None,
-    run_id=None
+    run_id=None,
 ):
     logger_output = output_path + "process_fastq.log"
     fh = logging.FileHandler(logger_output)

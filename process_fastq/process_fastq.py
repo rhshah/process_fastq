@@ -59,7 +59,7 @@ def run(
     store_read_length = []
     if run_id and request_id:
         for id in run_id:
-            glob_file_path = hp.make_path(fastq_path, id, request_id, sample_id)
+            glob_file_path = hp.make_path(fastq_path, sample_id ,id, request_id)
             logger.info(
                 "process_fastq: the path to search for files: %s", glob_file_path
             )
@@ -105,9 +105,10 @@ def run(
                 exit(1)
     elif run_id and request_id is None:
         for id in run_id:
-            glob_file_path = hp.make_path(fastq_path, id, request_id, sample_id)
+            glob_file_path = hp.make_path(fastq_path, sample_id, id, request_id)
             logger.info(
-                "process_fastq: the path to search for files: %s", glob_file_path)
+                "process_fastq: the path to search for files: %s", glob_file_path
+            )
             run_dict[id]["path"] = glob_file_path
             fastq_list = hp.get_fastq(glob_file_path)
             run_dict[id]["fastq_list"] = fastq_list
@@ -149,7 +150,7 @@ def run(
                 )
                 exit(1)
     else:
-        glob_file_path = hp.make_path(fastq_path, run_id, request_id, sample_id)
+        glob_file_path = hp.make_path(fastq_path, sample_id, run_id, request_id)
         logger.info("process_fastq: the path to search for files: %s", glob_file_path)
         for m_path in glob_file_path:
             fastq_list = hp.get_fastq(m_path)

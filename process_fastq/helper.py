@@ -40,7 +40,7 @@ def read_excel(file):
     return pdataframe
 
 
-def make_path(dir_path, run_id, request_id, sample_id):
+def make_path(dir_path, sample_id, run_id, request_id):
     logger.info("helper: Making file path to search for files")
     if run_id:
         glob_run_id = "*" + run_id + "*"
