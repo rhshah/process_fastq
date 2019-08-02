@@ -1,5 +1,37 @@
 # -*- coding: utf-8 -*-
 
+import logging
+from collections import defaultdict
+
+try:
+    import pandas as pd
+except ImportError as e:
+    print(
+        "process_fastq: pandas is not installed, please install pandas as it is one of the requirements."
+    )
+    exit(1)
+try:
+    import process_fastq.helper as hp
+except ImportError as e:
+    print(
+        "process_fastq: helper module could not be loaded, please install package correctly to get this running."
+    )
+    exit(1)
+try:
+    import process_fastq.get_directory_paths as gdp
+except ImportError as e:
+    print(
+        "process_fastq: get_directory_paths module could not be loaded, please install package correctly to get this running."
+    )
+    exit(1)
+try:
+    import process_fastq.get_fastq_information as gfi
+except ImportError as e:
+    print(
+        "process_fastq: get_fastq_information module could not be loaded, please install package correctly to get this running."
+    )
+    exit(1)
+
 """
 process_fastq
 ~~~~~~~~~~~~~~~
@@ -10,30 +42,7 @@ Created on July 26, 2019
 Description: main module for process_fastq
 @author: Ronak H Shah
 """
-import sys
-import os
-import logging
-import glob
-from collections import defaultdict
-import pprint
-import itertools
 
-try:
-    import pandas as pd
-except ImportError as e:
-    print(
-        "process_fastq: pandas is not installed, please install pandas as it \
-            is one of the requirements."
-    )
-    exit(1)
-try:
-    import process_fastq.helper as hp
-except ImportError as e:
-    print(
-        "process_fastq: helper module could not be loaded, please install \
-            package correctly to get this running."
-    )
-    exit(1)
 
 # Making logging possible
 logger = logging.getLogger("process_fastq")
@@ -63,15 +72,15 @@ def run(
     store_read_length = []
     if run_id and request_id:
         for id in run_id:
-            glob_file_path = hp.make_path(fastq_path, sample_id ,id, request_id)
+            glob_file_path = gdp.make_path(fastq_path, sample_id ,id, request_id)
             logger.info(
                 "process_fastq: the path to search for files: %s", glob_file_path
             )
             run_dict[id]["path"] = glob_file_path
-            fastq_list = hp.get_fastq(glob_file_path)
+            fastq_list = gfi.get_fastq(glob_file_path)
             run_dict[id]["fastq_list"] = fastq_list
             logger.info("process_fastq: the fastq path files: %s", fastq_list)
-            read_length_list = hp.get_fastq_read_length(fastq_list)
+            read_length_list = gfi.get_fastq_read_length(fastq_list)
             run_dict[id]["read_length"] = read_length_list
             store_read_length.append(read_length_list)
             if hp.all_same(read_length_list):
@@ -109,15 +118,15 @@ def run(
                 exit(1)
     elif run_id and request_id is None:
         for id in run_id:
-            glob_file_path = hp.make_path(fastq_path, sample_id, id, request_id)
+            glob_file_path = gdp.make_path(fastq_path, sample_id, id, request_id)
             logger.info(
                 "process_fastq: the path to search for files: %s", glob_file_path
             )
             run_dict[id]["path"] = glob_file_path
-            fastq_list = hp.get_fastq(glob_file_path)
+            fastq_list = gfi.get_fastq(glob_file_path)
             run_dict[id]["fastq_list"] = fastq_list
             logger.info("process_fastq: the fastq path files: %s", fastq_list)
-            read_length_list = hp.get_fastq_read_length(fastq_list)
+            read_length_list = gfi.get_fastq_read_length(fastq_list)
             run_dict[id]["read_length"] = read_length_list
             store_read_length.append(read_length_list)
             if hp.all_same(read_length_list):
@@ -154,12 +163,12 @@ def run(
                 )
                 exit(1)
     else:
-        glob_file_path = hp.make_path(fastq_path, sample_id, run_id, request_id)
+        glob_file_path = gdp.make_path(fastq_path, sample_id, run_id, request_id)
         logger.info("process_fastq: the path to search for files: %s", glob_file_path)
         for m_path in glob_file_path:
-            fastq_list = hp.get_fastq(m_path)
+            fastq_list = gfi.get_fastq(m_path)
             logger.info("process_fastq: the fastq path files: %s", fastq_list)
-            read_length_list = hp.get_fastq_read_length(fastq_list)
+            read_length_list = gfi.get_fastq_read_length(fastq_list)
             if hp.all_same(read_length_list):
                 if read_length_list[0] == expected_read_length:
                     logger.info(
