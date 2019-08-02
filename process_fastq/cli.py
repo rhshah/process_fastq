@@ -36,7 +36,7 @@ except ImportError as e:
     )
     exit(1)
 try:
-    import process_fastq as pf
+    import process_fastq.process_fastq as pf
 except ImportError as e:
     print(
         "cli: process_fastq module could not be loaded, please install package \
