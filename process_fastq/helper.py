@@ -66,7 +66,7 @@ def make_path(dir_path, run_id, request_id, sample_id):
         logger.warning(
             "helper: make_path: Please be aware that this will take significantly longer to run."
         )
-        cmd = "find " + fastq_path + " -maxdepth 3 -type d -name " + "glob_sample_id"
+        cmd = "find " + dir_path + " -maxdepth 3 -type d -name " + "glob_sample_id"
         logger.debug(
             "helper: make_path: the commandline is %s",
             cmd.encode("unicode_escape").decode("utf-8"),
