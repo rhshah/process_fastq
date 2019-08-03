@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
-import glob
-import logging
-import subprocess
-
 """
 get_fastq_information
 ~~~~~~~~~~~~~~~
@@ -15,6 +10,11 @@ Description: this function helps to get_fastq_read_length and get_fastq
 @author: Ronak H Shah
 """
 
+
+import os
+import glob
+import logging
+import subprocess
 
 # Making logging possible
 logger = logging.getLogger("process_fastq")

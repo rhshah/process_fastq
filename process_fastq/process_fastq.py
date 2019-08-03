@@ -1,7 +1,20 @@
 # -*- coding: utf-8 -*-
 
+"""
+process_fastq
+~~~~~~~~~~~~~~~
+:Description: main module for process_fastq
+"""
+"""
+Created on July 26, 2019
+Description: main module for process_fastq
+@author: Ronak H Shah
+"""
+
+import os
 import logging
 from collections import defaultdict
+import pathlib
 
 try:
     import pandas as pd
@@ -31,17 +44,13 @@ except ImportError as e:
         "process_fastq: get_fastq_information module could not be loaded, please install package correctly to get this running."
     )
     exit(1)
-
-"""
-process_fastq
-~~~~~~~~~~~~~~~
-:Description: main module for process_fastq
-"""
-"""
-Created on July 26, 2019
-Description: main module for process_fastq
-@author: Ronak H Shah
-"""
+try:
+    import process_fastq.run_cutadapt as rc
+except ImportError as e:
+    print(
+        "process_fastq: run_cutadapt module could not be loaded, please install package correctly to get this running."
+    )
+    exit(1)
 
 
 # Making logging possible
@@ -110,6 +119,7 @@ def run(
                     logger.critical(
                         "process_fastq: trimming with cutadapt will be ran to make the read length match expected read length"
                     )
+
             else:
                 logger.error(
                     "process_fastq: read length for read1 (R1) and read2 (R2) with %s does not match this is not expected",
@@ -123,6 +133,9 @@ def run(
                 "process_fastq: the path to search for files: %s", glob_file_path
             )
             run_dict[id]["path"] = glob_file_path
+            p_glob_file_path = pathlib.Path(glob_file_path)
+            link_glob_file_path = output_path + "/" + p_glob_file_path.name()
+            os.symlink(glob_file_path, link_glob_file_path)
             fastq_list = gfi.get_fastq(glob_file_path)
             run_dict[id]["fastq_list"] = fastq_list
             logger.info("process_fastq: the fastq path files: %s", fastq_list)

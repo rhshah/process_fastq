@@ -1,16 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import logging
-from functools import reduce
-
-try:
-    import pandas as pd
-except ImportError as e:
-    print(
-        "helper: pandas is not installed, please install pandas as it is one of the requirements"
-    )
-    exit(1)
-
 """
 helper
 ~~~~~~~~~~~~~~~
@@ -21,6 +10,17 @@ Created on July 26, 2019
 Description: helper has many utilities for process_fastq
 @author: Ronak H Shah
 """
+
+import logging
+from functools import reduce
+
+try:
+    import pandas as pd
+except ImportError as e:
+    print(
+        "helper: pandas is not installed, please install pandas as it is one of the requirements"
+    )
+    exit(1)
 
 # Making logging possible
 logger = logging.getLogger("process_fastq")

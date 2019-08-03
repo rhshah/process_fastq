@@ -1,13 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os
-import logging
-import glob
-import subprocess
-import re
-import pathlib
-from collections import defaultdict
-
 """
 get_directory_paths
 ~~~~~~~~~~~~~~~
@@ -18,6 +10,14 @@ Created on July 26, 2019
 Description: this function helps to create and provide directories
 @author: Ronak H Shah
 """
+
+import os
+import logging
+import glob
+import subprocess
+import re
+import pathlib
+from collections import defaultdict
 
 # Making logging possible
 logger = logging.getLogger("process_fastq")
