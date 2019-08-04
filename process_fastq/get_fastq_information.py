@@ -21,21 +21,23 @@ logger = logging.getLogger("process_fastq")
 
 
 def get_fastq(dir_path):
-    logger.info("helper: get_fastq: Globbing fastq.gz file")
+    logger.info("get_fastq_information: get_fastq: Globbing fastq.gz file")
     R1_pattern = "*R1*.gz"
     R2_pattern = "*R2*.gz"
-    logger.debug("helper: get_fastq: Path to search for fastq: %s", dir_path)
+    logger.debug(
+        "get_fastq_information: get_fastq: Path to search for fastq: %s", dir_path
+    )
     glob_path_R1 = os.path.join(dir_path, R1_pattern)
     glob_path_R2 = os.path.join(dir_path, R2_pattern)
     glob_path_R1 = glob.glob(glob_path_R1)
     glob_path_R2 = glob.glob(glob_path_R2)
-    logger.info("helper: get_fastq: Done globbing fastq.gz file")
+    logger.info("get_fastq_information: get_fastq: Done globbing fastq.gz file")
     return ["".join(glob_path_R1), "".join(glob_path_R2)]
 
 
 def get_fastq_read_length(fastq_list):
     logger.info(
-        "helper: get_fastq_read_length: getting the read length of each fastq file"
+        "get_fastq_information: get_fastq_read_length: getting the read length of each fastq file"
     )
     read_length_list = []
     for fastq in fastq_list:
@@ -49,7 +51,7 @@ def get_fastq_read_length(fastq_list):
             + "'\n'"
         )
         logger.debug(
-            "helper: get_fastq_read_length: the commandline is %s",
+            "get_fastq_information: get_fastq_read_length: the commandline is %s",
             cmd.encode("unicode_escape").decode("utf-8"),
         )
         out = subprocess.Popen(
@@ -62,12 +64,13 @@ def get_fastq_read_length(fastq_list):
         stdout, stderr = out.communicate()
         if stderr is None:
             logger.debug(
-                "helper: get_fastq_read_length: Read: %s", stdout.decode("utf-8")
+                "get_fastq_information: get_fastq_read_length: Read: %s",
+                stdout.decode("utf-8"),
             )
             read_length = len(stdout)
         else:
             logger.error(
-                "helper: get_fastq_read_length: could not calcualte the read for: %s",
+                "get_fastq_information: get_fastq_read_length: could not calcualte the read for: %s",
                 fastq,
             )
             exit(1)
