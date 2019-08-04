@@ -48,10 +48,10 @@ def all_same(items):
 
 def is_empty(any_structure):
     if any_structure:
-        logger.info("helper: all_same: Structure is not empty.", any_structure)
+        logger.info("helper: is_empty Structure is not empty.", any_structure)
         return False
     else:
-        logger.info("helper: all_same: Structure is empty.")
+        logger.info("helper: is_empty: Structure is empty.")
         return True
 
 

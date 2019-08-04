@@ -70,13 +70,13 @@ def run(
         request_id = None
     if hp.is_empty(run_id):
         run_id = None
-    logger.info("procees_fastq: sample id: %s", sample_id)
-    logger.info("procees_fastq: run id: %s", run_id)
-    logger.info("procees_fastq: request id: %s", request_id)
-    logger.info("procees_fastq: fastq_path: %s", fastq_path)
-    logger.info("procees_fastq: expected read length: %d", expected_read_length)
-    logger.info("procees_fastq: output path: %s", output_path)
-    logger.info("procees_fastq: cutadapt path: %s", cutadapt_path)
+    logger.info("procees_fastq: run: sample id: %s", sample_id)
+    logger.info("procees_fastq: run: run id: %s", run_id)
+    logger.info("procees_fastq: run: request id: %s", request_id)
+    logger.info("procees_fastq: run: fastq_path: %s", fastq_path)
+    logger.info("procees_fastq: run: expected read length: %d", expected_read_length)
+    logger.info("procees_fastq: run: output path: %s", output_path)
+    logger.info("procees_fastq: run: cutadapt path: %s", cutadapt_path)
     run_dict = defaultdict(dict)
     if run_id and request_id:
         if len(run_id) > 1:
@@ -142,13 +142,13 @@ def run(
 
     else:
         glob_file_path = gdp.make_path(fastq_path, sample_id, run_id, request_id)
-        logger.info("process_fastq: the path to search for files: %s", glob_file_path)
+        logger.info("process_fastq: run: the path to search for files: %s", glob_file_path)
         for m_path in glob_file_path:
             p_path = pathlib.Path(glob_file_path)
             p_sample_id = p_path.name()
             target_path_to_link = hp.make_directory(p_sample_id, output_path)
             fastq_list = gfi.get_fastq(m_path)
-            logger.info("process_fastq: the fastq path files: %s", fastq_list)
+            logger.info("process_fastq: run: the fastq path files: %s", fastq_list)
             read_length_list = gfi.get_fastq_read_length(fastq_list)
             run_dict[id]["path"] = glob_file_path
             run_dict[id]["fastq_list"] = fastq_list
@@ -166,12 +166,12 @@ def run(
 
 def get_sample_level_information(fastq_path, output_path, sample_id, id, request_id):
     glob_file_path = gdp.make_path(fastq_path, sample_id, id, request_id)
-    logger.info("process_fastq: the path to search for files: %s", glob_file_path)
+    logger.info("process_fastq: get_sample_level_information: the path to search for files: %s", glob_file_path)
     p_path = pathlib.Path(glob_file_path)
     p_sample_id = p_path.name()
     target_path_to_link = hp.make_directory(p_sample_id, output_path)
     fastq_list = gfi.get_fastq(glob_file_path)
-    logger.info("process_fastq: the fastq path files: %s", fastq_list)
+    logger.info("process_fastq: get_sample_level_information: the fastq path files: %s", fastq_list)
     read_length_list = gfi.get_fastq_read_length(fastq_list)
     return [glob_file_path, target_path_to_link, fastq_list, read_length_list]
 
@@ -182,34 +182,34 @@ def compare_read_length(
     if hp.all_same(read_length_list):
         if read_length_list[0] == expected_read_length:
             logger.info(
-                "process_fastq: read length for %s matches expected read length",
+                "process_fastq: compare_read_length:  length for %s matches expected read length",
                 glob_file_path,
             )
         elif read_length_list[0] < expected_read_length:
             logger.critical(
-                "process_fastq: read length for %s does not match the expected read length",
+                "process_fastq: compare_read_length:  length for %s does not match the expected read length",
                 glob_file_path,
             )
             logger.warning(
-                "process_fastq: read length for %s is less then expected read length",
+                "process_fastq: compare_read_length: read length for %s is less then expected read length",
                 glob_file_path,
             )
         else:
             logger.critical(
-                "process_fastq: read length for %s does not match the expected read length",
+                "process_fastq: compare_read_length:  length for %s does not match the expected read length",
                 glob_file_path,
             )
             logger.critical(
-                "process_fastq: read length for %s is more then expected read length",
+                "process_fastq: compare_read_length:  length for %s is more then expected read length",
                 glob_file_path,
             )
             logger.critical(
-                "process_fastq: trimming with cutadapt will be ran to make the read length match expected read length"
+                "process_fastq:compare_read_length: trimming with cutadapt will be ran to make the read length match expected read length"
             )
 
     else:
         logger.error(
-            "process_fastq: read length for read1 (R1) and read2 (R2) with %s does not match this is not expected",
+            "process_fastq: compare_read_length: length for read1 (R1) and read2 (R2) with %s does not match this is not expected",
             fastq_list,
         )
         exit(1)
