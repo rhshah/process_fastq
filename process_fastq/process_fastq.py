@@ -79,7 +79,7 @@ def run(
     logger.info("procees_fastq: run: cutadapt path: %s", cutadapt_path)
     run_dict = defaultdict(dict)
     if run_id and request_id:
-        if len(run_id) > 1:
+        if len(run_id) == 1:
             glob_file_path, target_path_to_link, fastq_list, read_length_list = get_sample_level_information(
                 fastq_path, output_path, sample_id, run_id[0], request_id
             )
@@ -110,7 +110,7 @@ def run(
                 )
 
     elif run_id and request_id is None:
-        if len(run_id) > 1:
+        if len(run_id) == 1:
             glob_file_path, target_path_to_link, fastq_list, read_length_list = get_sample_level_information(
                 fastq_path, output_path, sample_id, run_id[0], request_id
             )
