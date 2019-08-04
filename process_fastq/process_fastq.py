@@ -86,7 +86,7 @@ def run(
             run_dict[run_id]["path"] = glob_file_path
             run_dict[run_id]["fastq_list"] = fastq_list
             run_dict[run_id]["read_length"] = read_length_list
-            check_value = compare_read_length(read_length_list, expected_read_length, glob_file_path, fastq_path, fastq_list):
+            check_value = compare_read_length(read_length_list, expected_read_length, glob_file_path, fastq_path, fastq_list)
                 if check_value:
                     try:
                         os.symlink(os.path.join(glob_file_path,"*"), os.path.join(target_path_to_link , "/")
