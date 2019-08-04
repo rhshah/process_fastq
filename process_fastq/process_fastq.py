@@ -93,7 +93,7 @@ def run(
                 fastq_path,
                 fastq_list,
             ):
-            os.symlink(os.path.join(glob_file_path,"*"), os.path.join(target_path_to_link , "/")
+                os.symlink(os.path.join(glob_file_path,"*"), os.path.join(target_path_to_link , "/")
         else:
             for r_id in run_id:
                 glob_file_path, target_path_to_link, fastq_list, read_length_list = get_sample_level_information(
