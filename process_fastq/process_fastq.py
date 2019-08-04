@@ -145,7 +145,7 @@ def run(
         logger.info("process_fastq: run: the path to search for files: %s", glob_file_path)
         for m_path in glob_file_path:
             p_path = pathlib.Path(m_path)
-            p_sample_id = p_path.name()
+            p_sample_id = p_path.name
             target_path_to_link = hp.make_directory(p_sample_id, output_path)
             fastq_list = gfi.get_fastq(m_path)
             logger.info("process_fastq: run: the fastq path files: %s", fastq_list)
@@ -168,7 +168,7 @@ def get_sample_level_information(fastq_path, output_path, sample_id, id, request
     glob_file_path = gdp.make_path(fastq_path, sample_id, id, request_id)
     logger.info("process_fastq: get_sample_level_information: the path to search for files: %s", glob_file_path)
     p_path = pathlib.Path(glob_file_path)
-    p_sample_id = p_path.name()
+    p_sample_id = p_path.name
     target_path_to_link = hp.make_directory(p_sample_id, output_path)
     fastq_list = gfi.get_fastq(glob_file_path)
     logger.info("process_fastq: get_sample_level_information: the fastq path files: %s", fastq_list)
