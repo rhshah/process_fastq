@@ -73,7 +73,7 @@ def run(
     logger.info("procees_fastq: run: sample id: %s", sample_id)
     logger.info("procees_fastq: run: run id: %s", run_id)
     logger.info("procees_fastq: run: request id: %s", request_id)
-    logger.info("procees_fastq: run: fastq_path: %s", fastq_path)
+    logger.info("procees_fastq: run: fastq path: %s", fastq_path)
     logger.info("procees_fastq: run: expected read length: %d", expected_read_length)
     logger.info("procees_fastq: run: output path: %s", output_path)
     logger.info("procees_fastq: run: cutadapt path: %s", cutadapt_path)

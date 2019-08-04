@@ -28,7 +28,7 @@ def make_path(dir_path, sample_id, run_id, request_id):
     if run_id:
         glob_run_id = "*" + run_id + "*"
     else:
-        glob_run_id = "**"
+        glob_run_id = "*"
     logger.debug("helper: make_path: glob_run_id: %s", glob_run_id)
     if request_id:
         glob_request_id = "*" + request_id + "*"
@@ -108,7 +108,7 @@ def make_path(dir_path, sample_id, run_id, request_id):
             sort_m_path = sorted(m_path)
             glob_path.append(sort_m_path.pop())
     else:
-        glob_path = glob.glob(glob_path, recursive=True)
+        glob_path = glob.glob(glob_path)
         if len(glob_path) > 1:
             ext_project_id = []
             ext_run_dict = defaultdict(list)
