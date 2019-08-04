@@ -168,6 +168,8 @@ def run(
 def get_sample_level_information(fastq_path, output_path, sample_id, r_id, request_id):
     glob_file_path = gdp.make_path(fastq_path, sample_id, r_id, request_id)
     logger.info("process_fastq: get_sample_level_information: the path to search for files: %s", glob_file_path)
+    if isinstance(glob_file_path, list):
+        glob_file_path = "".join(glob_file_path)
     p_path = pathlib.Path(glob_file_path)
     p_sample_id = p_path.name
     target_path_to_link = hp.make_directory(p_sample_id, output_path)
