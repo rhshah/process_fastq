@@ -11,6 +11,7 @@ Description: helper has many utilities for process_fastq
 @author: Ronak H Shah
 """
 
+import os
 import logging
 from functools import reduce
 
@@ -52,3 +53,14 @@ def is_empty(any_structure):
     else:
         logger.info("helper: all_same: Structure is empty.")
         return True
+
+
+def make_directory(name, path):
+    dirName = os.path.join(path, name)
+    try:
+        # Create target Directory
+        os.mkdir(dirName)
+        logger.info("helper: make_directory: Directory created: %s", dirName)
+    except FileExistsError:
+        logger.error("helper: make_directory: Directory already exists: %s", dirName)
+        exit(1)
