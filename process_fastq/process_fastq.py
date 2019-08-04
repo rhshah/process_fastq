@@ -83,9 +83,9 @@ def run(
             glob_file_path, target_path_to_link, fastq_list, read_length_list = get_sample_level_information(
                 fastq_path, output_path, sample_id, run_id[0], request_id
             )
-            run_dict[id]["path"] = glob_file_path
-            run_dict[id]["fastq_list"] = fastq_list
-            run_dict[id]["read_length"] = read_length_list
+            run_dict[run_id]["path"] = glob_file_path
+            run_dict[run_id]["fastq_list"] = fastq_list
+            run_dict[run_id]["read_length"] = read_length_list
             compare_read_length(
                 read_length_list,
                 expected_read_length,
@@ -94,13 +94,13 @@ def run(
                 fastq_list,
             )
         else:
-            for id in run_id:
+            for r_id in run_id:
                 glob_file_path, target_path_to_link, fastq_list, read_length_list = get_sample_level_information(
-                    fastq_path, output_path, sample_id, id, request_id
+                    fastq_path, output_path, sample_id, r_id, request_id
                 )
-                run_dict[id]["path"] = glob_file_path
-                run_dict[id]["fastq_list"] = fastq_list
-                run_dict[id]["read_length"] = read_length_list
+                run_dict[r_id]["path"] = glob_file_path
+                run_dict[r_id]["fastq_list"] = fastq_list
+                run_dict[r_id]["read_length"] = read_length_list
                 compare_read_length(
                     read_length_list,
                     expected_read_length,
@@ -114,9 +114,9 @@ def run(
             glob_file_path, target_path_to_link, fastq_list, read_length_list = get_sample_level_information(
                 fastq_path, output_path, sample_id, run_id[0], request_id
             )
-            run_dict[id]["path"] = glob_file_path
-            run_dict[id]["fastq_list"] = fastq_list
-            run_dict[id]["read_length"] = read_length_list
+            run_dict[rum_id]["path"] = glob_file_path
+            run_dict[run_id]["fastq_list"] = fastq_list
+            run_dict[run_id]["read_length"] = read_length_list
             compare_read_length(
                 read_length_list,
                 expected_read_length,
@@ -125,13 +125,13 @@ def run(
                 fastq_list,
             )
         else:
-            for id in run_id:
+            for r_id in run_id:
                 glob_file_path, target_path_to_link, fastq_list, read_length_list = get_sample_level_information(
-                    fastq_path, output_path, sample_id, id, request_id
+                    fastq_path, output_path, sample_id, r_id, request_id
                 )
-                run_dict[id]["path"] = glob_file_path
-                run_dict[id]["fastq_list"] = fastq_list
-                run_dict[id]["read_length"] = read_length_list
+                run_dict[r_id]["path"] = glob_file_path
+                run_dict[r_id]["fastq_list"] = fastq_list
+                run_dict[r_id]["read_length"] = read_length_list
                 compare_read_length(
                     read_length_list,
                     expected_read_length,
@@ -146,13 +146,14 @@ def run(
         for m_path in glob_file_path:
             p_path = pathlib.Path(m_path)
             p_sample_id = p_path.name
+            p_run_id = p_path.parent.parent.name
             target_path_to_link = hp.make_directory(p_sample_id, output_path)
             fastq_list = gfi.get_fastq(m_path)
             logger.info("process_fastq: run: the fastq path files: %s", fastq_list)
             read_length_list = gfi.get_fastq_read_length(fastq_list)
-            run_dict[id]["path"] = glob_file_path
-            run_dict[id]["fastq_list"] = fastq_list
-            run_dict[id]["read_length"] = read_length_list
+            run_dict[p_run_id]["path"] = m_path
+            run_dict[p_run_id]["fastq_list"] = fastq_list
+            run_dict[p_run_id]["read_length"] = read_length_list
             compare_read_length(
                 read_length_list,
                 expected_read_length,
@@ -164,8 +165,8 @@ def run(
     return 0
 
 
-def get_sample_level_information(fastq_path, output_path, sample_id, id, request_id):
-    glob_file_path = gdp.make_path(fastq_path, sample_id, id, request_id)
+def get_sample_level_information(fastq_path, output_path, sample_id, r_id, request_id):
+    glob_file_path = gdp.make_path(fastq_path, sample_id, r_id, request_id)
     logger.info("process_fastq: get_sample_level_information: the path to search for files: %s", glob_file_path)
     p_path = pathlib.Path(glob_file_path)
     p_sample_id = p_path.name
