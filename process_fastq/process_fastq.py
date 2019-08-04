@@ -96,7 +96,7 @@ def run(
             if check_value:
                 try:
                     os.symlink(
-                        os.path.join(glob_file_path, "*"),
+                        os.path.join(glob_file_path, "/*"),
                         os.path.join(target_path_to_link, "/"),
                     )
                 except OSError as e:
@@ -145,7 +145,7 @@ def run(
             if check_value:
                 try:
                     os.symlink(
-                        os.path.join(glob_file_path, "*"),
+                        os.path.join(glob_file_path, "/*"),
                         os.path.join(target_path_to_link, "/"),
                     )
                 except OSError as e:
