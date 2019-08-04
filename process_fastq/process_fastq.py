@@ -86,14 +86,15 @@ def run(
             run_dict[run_id]["path"] = glob_file_path
             run_dict[run_id]["fastq_list"] = fastq_list
             run_dict[run_id]["read_length"] = read_length_list
-            if compare_read_length(
-                read_length_list,
-                expected_read_length,
-                glob_file_path,
-                fastq_path,
-                fastq_list,
-            ):
-                os.symlink(os.path.join(glob_file_path,"*"), os.path.join(target_path_to_link , "/")
+            check_value = compare_read_length(read_length_list, expected_read_length, glob_file_path, fastq_path, fastq_list):
+                if check_value:
+                    try:
+                        os.symlink(os.path.join(glob_file_path,"*"), os.path.join(target_path_to_link , "/")
+                    except OSError as e:
+                        logger.info("procees_fastq: run: cannot create symlink")
+                        exit(1)
+                else:
+                    logger.info("procees_fastq: run: running cutadapt")
         else:
             for r_id in run_id:
                 glob_file_path, target_path_to_link, fastq_list, read_length_list = get_sample_level_information(
