@@ -61,6 +61,7 @@ def make_directory(name, path):
         # Create target Directory
         os.mkdir(dirName)
         logger.info("helper: make_directory: Directory created: %s", dirName)
-    except FileExistsError:
-        logger.error("helper: make_directory: Directory already exists: %s", dirName)
-        exit(1)
+    except FileExistsError as e:
+        logger.warning("helper: make_directory: Directory already exists: %s", dirName)
+        logger.warning("helper: make_directory: ")
+    return dirName
