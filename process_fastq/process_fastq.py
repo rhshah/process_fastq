@@ -157,7 +157,7 @@ def run(
             compare_read_length(
                 read_length_list,
                 expected_read_length,
-                glob_file_path,
+                m_path,
                 fastq_path,
                 fastq_list,
             )

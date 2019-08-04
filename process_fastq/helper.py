@@ -63,5 +63,5 @@ def make_directory(name, path):
         logger.info("helper: make_directory: Directory created: %s", dirName)
     except FileExistsError as e:
         logger.warning("helper: make_directory: Directory already exists: %s", dirName)
-        logger.warning("helper: make_directory: ")
+        logger.warning("helper: make_directory: Data might be overwritten")
     return dirName
