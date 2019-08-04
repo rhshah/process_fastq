@@ -114,7 +114,7 @@ def run(
             glob_file_path, target_path_to_link, fastq_list, read_length_list = get_sample_level_information(
                 fastq_path, output_path, sample_id, run_id[0], request_id
             )
-            run_dict[rum_id]["path"] = glob_file_path
+            run_dict[run_id]["path"] = glob_file_path
             run_dict[run_id]["fastq_list"] = fastq_list
             run_dict[run_id]["read_length"] = read_length_list
             compare_read_length(
