@@ -27,7 +27,7 @@ def run(cutadapt_path, output_path, fastq_list, trim_length):
     for fastq_file in fastq_list:
         p_path = pathlib.Path(fastq_file)
         sample_id = p_path.name
-        tmp_fo = tempfile.mkstemp(dir=output_path, prefix="cutadapt")
+        tmp_fo = tempfile.TemporaryDirectory(dir=output_path, prefix="cutadapt_")
         out_file_path = os.path.join(tmp_fo.name, sample_id)
         cmd = cutadapt_path + " -l " + trim_length + " " + out_file_path + fastq_file
         logger.debug(
