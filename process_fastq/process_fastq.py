@@ -166,7 +166,7 @@ def run(
                 )
                 if check_value:
                     for fq in fastq_list:
-                        if "R1" in fq:
+                        if "_R1_" in fq:
                             all_fq_r1_list.append(fq)
                         else:
                             all_fq_r2_list.append(fq)
@@ -176,7 +176,7 @@ def run(
                         cutadapt_path, target_path_to_link, fastq_list, expected_read_length
                     )
                     for fq in trimmed_fastq:
-                        if "R1" in fq:
+                        if "_R1_" in fq:
                             all_fq_r1_list.append(fq)
                         else:
                             all_fq_r2_list.append(fq)
@@ -293,7 +293,7 @@ def run(
                         cutadapt_path, target_path_to_link, fastq_list, expected_read_length
                     )
                     for fq in trimmed_fastq:
-                        if "R1" in fq:
+                        if "_R1_" in fq:
                             all_fq_r1_list.append(fq)
                         else:
                             all_fq_r2_list.append(fq)
@@ -342,7 +342,7 @@ def run(
             )
             if check_value:
                 for fq in fastq_list:
-                    if "R1" in fq:
+                    if "_R1_" in fq:
                         all_fq_r1_list.append(fq)
                     else:
                         all_fq_r2_list.append(fq)
@@ -352,7 +352,7 @@ def run(
                     cutadapt_path, target_path_to_link, fastq_list, expected_read_length
                 )
                 for fq in trimmed_fastq:
-                    if "R1" in fq:
+                    if "_R1_" in fq:
                         all_fq_r1_list.append(fq)
                     else:
                         all_fq_r2_list.append(fq)

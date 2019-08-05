@@ -22,8 +22,8 @@ logger = logging.getLogger("process_fastq")
 
 def get_fastq(dir_path):
     logger.info("get_fastq_information: get_fastq: Globbing fastq.gz file")
-    R1_pattern = "*R1*.gz"
-    R2_pattern = "*R2*.gz"
+    R1_pattern = "*_R1_*.gz"
+    R2_pattern = "*_R2_*.gz"
     logger.debug(
         "get_fastq_information: get_fastq: Path to search for fastq: %s", dir_path
     )
