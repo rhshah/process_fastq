@@ -6,8 +6,6 @@
 
 import unittest
 from click.testing import CliRunner
-
-from process_fastq import process_fastq
 from process_fastq import cli
 
 
