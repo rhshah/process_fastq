@@ -11,7 +11,7 @@ Description: console script for running process_fastq on manifest level on juno
 @author: Ronak H Shah
 """
 
-
+import os
 import sys
 import logging
 import time
@@ -119,7 +119,7 @@ def main(
     process_fastq_path,
     request_id,
 ):
-    logger_output = output_path + "link_fastq.log"
+    logger_output = os.path.join(output_path, "link_fastq.log")
     fh = logging.FileHandler(logger_output)
     formatter = logging.Formatter(
         fmt="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -234,13 +234,13 @@ def bsub(bsub_cmd):
     """
     args = shlex.split(bsub_cmd)
     try:
-        proc = subprocess.Popen(args,stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        proc = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         proc.wait()
         retcode = proc.returncode
         if retcode >= 0:
             output = proc.stdout.readline().decode("utf-8")
             logger.info("link_fastq_juno: bsub: %s", output)
-            lsf_job_id = int(output.strip().split()[1].strip('<>'))
+            lsf_job_id = int(output.strip().split()[1].strip("<>"))
     except IOError as e:
         e = sys.exc_info()[0]
         logging.info(

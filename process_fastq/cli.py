@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import sys
 import logging
 import time
@@ -116,7 +117,7 @@ def main(
     request_id=None,
     run_id=None,
 ):
-    logger_output = output_path + "process_fastq.log"
+    logger_output = os.path.join(output_path, "process_fastq.log")
     fh = logging.FileHandler(logger_output)
     formatter = logging.Formatter(
         fmt="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
