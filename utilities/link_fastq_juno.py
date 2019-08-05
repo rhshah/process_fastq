@@ -220,22 +220,27 @@ def read_excel(file):
     return pdataframe
 
 
-def bsub(bsubline):
+def bsub(bsub_cmd):
     """
     Execute lsf bsub
     :param bsubline:
     :return:
     """
-    process = subprocess.Popen(
-        bsubline, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+    out = subprocess.Popen(
+        (bsub_cmd),
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        shell=True,
     )
-    output = process.stdout.readline()
+    stdout, stderr = out.communicate()
+    if stderr is None:
+        logger.debug("link_fastq: bsub: Read: %s", stdout.decode("utf-8"))
+    else:
+        logger.error("link_fastq: bsub: could not run link_fastq for")
+        exit(1)
 
-    # fixme: need better exception handling
-    logger.info("%s", output)
-    lsf_job_id = int(output.strip().split()[1].strip("<>"))
-
-    return lsf_job_id
+    return 0
 
 
 if __name__ == "__main__":
