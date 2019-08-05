@@ -80,6 +80,7 @@ def run(
     run_dict = defaultdict(dict)
     if run_id and request_id:
         if len(run_id) == 1:
+            logger.debug("process_fastq:run: I am in where run id and request_id are present and there is only one run id")
             glob_file_path, target_path_to_link, fastq_list, read_length_list = get_sample_level_information(
                 fastq_path, output_path, sample_id, run_id[0], request_id
             )
@@ -106,6 +107,7 @@ def run(
             else:
                 logger.info("procees_fastq: run: running cutadapt")
         else:
+            logger.debug("process_fastq:run: I am in where run id and request_id are present and there are more then one run id")
             all_fq_r1_list = []
             all_fq_r2_list = []
             for r_id in run_id:
@@ -163,6 +165,7 @@ def run(
             exit(1)
     elif run_id and request_id is None:
         if len(run_id) == 1:
+            logger.debug("process_fastq:run: I am in where run id is present and  request_id is not present and there is only one run id")
             glob_file_path, target_path_to_link, fastq_list, read_length_list = get_sample_level_information(
                 fastq_path, output_path, sample_id, run_id[0], request_id
             )
@@ -206,6 +209,7 @@ def run(
             else:
                 logger.info("procees_fastq: run: running cutadapt")
         else:
+            logger.debug("process_fastq:run: I am in where run id is present and request_id is not present and there are more than one run id")
             all_fq_r1_list = []
             all_fq_r2_list = []
             for r_id in run_id:
@@ -262,6 +266,7 @@ def run(
             logger.error("process_fastq:run: cannot move the fastq files")
             exit(1)
     else:
+        logger.debug("process_fastq:run: I am in where run id is not present and request_id is not present")
         glob_file_path = gdp.make_path(fastq_path, sample_id, run_id, request_id)
         logger.info(
             "process_fastq: run: the path to search for files: %s", glob_file_path
