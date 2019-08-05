@@ -29,7 +29,7 @@ def run(cutadapt_path, output_path, fastq_list, trim_length):
     sample_id_2 = p_path_2.name
     tmp_fo = tempfile.TemporaryDirectory(dir=output_path, prefix="cutadapt_")
     out_file_path_1 = os.path.join(tmp_fo.name, sample_id_1)
-    out_file_path_1 = os.path.join(tmp_fo.name, sample_id_2)
+    out_file_path_2 = os.path.join(tmp_fo.name, sample_id_2)
     cmd = (
         cutadapt_path
         + " --action none -l "
