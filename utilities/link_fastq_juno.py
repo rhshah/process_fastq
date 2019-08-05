@@ -187,9 +187,12 @@ def main(
             + "-J "
             + "link_fastq_"
             + sample_id
-            + " -R select[mem > 12] rusage[mem=12]"
-            + " -M 20 "
-            + " -n 1 "
+            + " -app anyOS"
+            + " -R select[mem > 12]"
+            + " -R rusage[mem=12]"
+            + " -R select[type==CentOS7]"
+            + " -M 20"
+            + " -n 1"
             + " -W 360 "
             + process_fastq_cmd
         )
