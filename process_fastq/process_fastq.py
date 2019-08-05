@@ -15,7 +15,7 @@ import os
 import logging
 from collections import defaultdict
 import pathlib
-
+import shutil
 try:
     import pandas as pd
 except ImportError as e:
@@ -86,7 +86,7 @@ def run(
             run_dict[run_id]["path"] = glob_file_path
             run_dict[run_id]["fastq_list"] = fastq_list
             run_dict[run_id]["read_length"] = read_length_list
-            check_value = compare_read_length(
+            check_value, trim_length = compare_read_length(
                 read_length_list,
                 expected_read_length,
                 glob_file_path,
@@ -101,11 +101,13 @@ def run(
                             os.path.join(target_path_to_link, item),
                         )
                     except OSError as e:
-                        logger.info("procees_fastq: run: cannot create symlink")
+                        logger.info("procees_fastq: run: cannot create symlink %s", e)
                         exit(1)
             else:
                 logger.info("procees_fastq: run: running cutadapt")
         else:
+            all_fq_r1_list = []
+            all_fq_r2_list = []
             for r_id in run_id:
                 glob_file_path, target_path_to_link, fastq_list, read_length_list = get_sample_level_information(
                     fastq_path, output_path, sample_id, r_id, request_id
@@ -113,14 +115,52 @@ def run(
                 run_dict[r_id]["path"] = glob_file_path
                 run_dict[r_id]["fastq_list"] = fastq_list
                 run_dict[r_id]["read_length"] = read_length_list
-                compare_read_length(
+                for item in os.listdir(glob_file_path):
+                    if "SampleSheet" in item:
+                        try:
+                            os.symlink(
+                                os.path.join(glob_file_path, item),
+                                os.path.join(target_path_to_link, item),
+                            )
+                        except OSError as e:
+                            logger.info(
+                                "procees_fastq: run: cannot create symlink %s", e
+                            )
+                            exit(1)
+                check_value, trim_length = compare_read_length(
                     read_length_list,
                     expected_read_length,
                     glob_file_path,
                     fastq_path,
                     fastq_list,
                 )
+            if check_value:
+                for fq in fastq_list:
+                    if "R1" in fq:
+                        all_fq_r1_list.append(fq)
+                    else:
+                        all_fq_r2_list.append(fq)
+            else:
+                logger.info("procees_fastq: run: running cutadapt")
+                trimmed_fastq = rc.run(
+                    cutadapt_path, target_path_to_link, fastq_list, trim_length
+                )
+                for fq in trimmed_fastq:
+                    if "R1" in fq:
+                        all_fq_r1_list.append(fq)
+                    else:
+                        all_fq_r2_list.append(fq)
 
+        merge_fq_r1 = hp.merge_fastq(all_fq_r1_list, target_path_to_link)
+        merge_fq_r2 = hp.merge_fastq(all_fq_r1_list, target_path_to_link)
+        logger.info("process_fastq:run: Merged fastq R1:%s", merge_fq_r1)
+        logger.info("process_fastq:run: Merged fastq R2:%s", merge_fq_r2)
+        try:
+            shutil.move(merge_fq_r1, target_path_to_link)
+            shutil.move(merge_fq_r2, target_path_to_link)
+        except IOError as e:
+            logger.error("process_fastq:run: cannot move the fastq files")
+            exit(1)
     elif run_id and request_id is None:
         if len(run_id) == 1:
             glob_file_path, target_path_to_link, fastq_list, read_length_list = get_sample_level_information(
@@ -129,6 +169,16 @@ def run(
             run_dict[run_id]["path"] = glob_file_path
             run_dict[run_id]["fastq_list"] = fastq_list
             run_dict[run_id]["read_length"] = read_length_list
+            for item in os.listdir(glob_file_path):
+                if "SampleSheet" in item:
+                    try:
+                        os.symlink(
+                            os.path.join(glob_file_path, item),
+                            os.path.join(target_path_to_link, item),
+                        )
+                    except OSError as e:
+                        logger.info("procees_fastq: run: cannot create symlink %s", e)
+                        exit(1)
             compare_read_length(
                 read_length_list,
                 expected_read_length,
@@ -136,7 +186,7 @@ def run(
                 fastq_path,
                 fastq_list,
             )
-            check_value = compare_read_length(
+            check_value, trim_length = compare_read_length(
                 read_length_list,
                 expected_read_length,
                 glob_file_path,
@@ -151,11 +201,13 @@ def run(
                             os.path.join(target_path_to_link, item),
                         )
                     except OSError as e:
-                        logger.info("procees_fastq: run: cannot create symlink")
+                        logger.error("procees_fastq: run: cannot create symlink %s", e)
                         exit(1)
             else:
                 logger.info("procees_fastq: run: running cutadapt")
         else:
+            all_fq_r1_list = []
+            all_fq_r2_list = []
             for r_id in run_id:
                 glob_file_path, target_path_to_link, fastq_list, read_length_list = get_sample_level_information(
                     fastq_path, output_path, sample_id, r_id, request_id
@@ -163,19 +215,59 @@ def run(
                 run_dict[r_id]["path"] = glob_file_path
                 run_dict[r_id]["fastq_list"] = fastq_list
                 run_dict[r_id]["read_length"] = read_length_list
-                compare_read_length(
+                for item in os.listdir(glob_file_path):
+                    if "SampleSheet" in item:
+                        try:
+                            os.symlink(
+                                os.path.join(glob_file_path, item),
+                                os.path.join(target_path_to_link, item),
+                            )
+                        except OSError as e:
+                            logger.info(
+                                "procees_fastq: run: cannot create symlink %s", e
+                            )
+                            exit(1)
+                check_value, trim_length = compare_read_length(
                     read_length_list,
                     expected_read_length,
                     glob_file_path,
                     fastq_path,
                     fastq_list,
                 )
+            if check_value:
+                for fq in fastq_list:
+                    if "R1" in fq:
+                        all_fq_r1_list.append(fq)
+                    else:
+                        all_fq_r2_list.append(fq)
+            else:
+                logger.info("procees_fastq: run: running cutadapt")
+                trimmed_fastq = rc.run(
+                    cutadapt_path, target_path_to_link, fastq_list, trim_length
+                )
+                for fq in trimmed_fastq:
+                    if "R1" in fq:
+                        all_fq_r1_list.append(fq)
+                    else:
+                        all_fq_r2_list.append(fq)
 
+        merge_fq_r1 = hp.merge_fastq(all_fq_r1_list, target_path_to_link)
+        merge_fq_r2 = hp.merge_fastq(all_fq_r1_list, target_path_to_link)
+        logger.info("process_fastq:run: Merged fastq R1:%s", merge_fq_r1)
+        logger.info("process_fastq:run: Merged fastq R2:%s", merge_fq_r2)
+        try:
+            shutil.move(merge_fq_r1, target_path_to_link)
+            shutil.move(merge_fq_r2, target_path_to_link)
+        except IOError as e:
+            logger.error("process_fastq:run: cannot move the fastq files")
+            exit(1)
     else:
         glob_file_path = gdp.make_path(fastq_path, sample_id, run_id, request_id)
         logger.info(
             "process_fastq: run: the path to search for files: %s", glob_file_path
         )
+        all_fq_r1_list = []
+        all_fq_r2_list = []
         for m_path in glob_file_path:
             p_path = pathlib.Path(m_path)
             p_sample_id = p_path.name
@@ -187,10 +279,46 @@ def run(
             run_dict[p_run_id]["path"] = m_path
             run_dict[p_run_id]["fastq_list"] = fastq_list
             run_dict[p_run_id]["read_length"] = read_length_list
-            compare_read_length(
+            for item in os.listdir(glob_file_path):
+                if "SampleSheet" in item:
+                    try:
+                        os.symlink(
+                            os.path.join(glob_file_path, item),
+                            os.path.join(target_path_to_link, item),
+                        )
+                    except OSError as e:
+                        logger.info("procees_fastq: run: cannot create symlink %s", e)
+                        exit(1)
+            check_value, trim_length = compare_read_length(
                 read_length_list, expected_read_length, m_path, fastq_path, fastq_list
             )
+            if check_value:
+                for fq in fastq_list:
+                    if "R1" in fq:
+                        all_fq_r1_list.append(fq)
+                    else:
+                        all_fq_r2_list.append(fq)
+            else:
+                logger.info("procees_fastq: run: running cutadapt")
+                trimmed_fastq = rc.run(
+                    cutadapt_path, target_path_to_link, fastq_list, trim_length
+                )
+                for fq in trimmed_fastq:
+                    if "R1" in fq:
+                        all_fq_r1_list.append(fq)
+                    else:
+                        all_fq_r2_list.append(fq)
 
+        merge_fq_r1 = hp.merge_fastq(all_fq_r1_list, target_path_to_link)
+        merge_fq_r2 = hp.merge_fastq(all_fq_r1_list, target_path_to_link)
+        logger.info("process_fastq:run: Merged fastq R1:%s", merge_fq_r1)
+        logger.info("process_fastq:run: Merged fastq R2:%s", merge_fq_r2)
+        try:
+            shutil.move(merge_fq_r1, target_path_to_link)
+            shutil.move(merge_fq_r2, target_path_to_link)
+        except IOError as e:
+            logger.error("process_fastq:run: cannot move the fastq files")
+            exit(1)
     return 0
 
 
@@ -217,6 +345,7 @@ def get_sample_level_information(fastq_path, output_path, sample_id, r_id, reque
 def compare_read_length(
     read_length_list, expected_read_length, glob_file_path, fastq_path, fastq_list
 ):
+    trim_length = 0
     if hp.all_same(read_length_list):
         if read_length_list[0] == expected_read_length:
             value = True
@@ -236,6 +365,7 @@ def compare_read_length(
             )
         else:
             value = False
+            trim_length = abs(read_length_list[0] - expected_read_length)
             logger.critical(
                 "process_fastq: compare_read_length:  length for %s does not match the expected read length",
                 glob_file_path,
@@ -254,4 +384,5 @@ def compare_read_length(
             fastq_list,
         )
         exit(1)
-    return value
+    return [value, trim_length]
+

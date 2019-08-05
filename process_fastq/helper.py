@@ -13,6 +13,8 @@ Description: helper has many utilities for process_fastq
 
 import os
 import logging
+import pathlib
+import shutil
 from functools import reduce
 
 try:
@@ -65,3 +67,14 @@ def make_directory(name, path):
         logger.warning("helper: make_directory: Directory already exists: %s", dirName)
         logger.warning("helper: make_directory: Data might be overwritten")
     return dirName
+
+
+def merge_fastq(fastq_list, output_path):
+    p_path = pathlib(fastq_list[0])
+    out_file_name = p_path.name
+    out_file_path = os.path.join(output_path, out_file_name)
+    with open(out_file_path, 'w') as outfile:
+        for infile in fastq_list:
+            shutil.copyfileobj(open(infile), outfile)
+    return out_file_path
+
