@@ -73,7 +73,7 @@ def make_directory(name, path):
 def merge_fastq(fastq_list, output_path):
     p_path = pathlib.Path(fastq_list[0])
     out_file_name = p_path.name
-    tmp_fo = tempfile.TemporaryDirectory(dir=output_path, prefix="mergefastq_")
+    tmp_fo = tempfile.mkdtemp(dir=output_path, prefix="mergefastq_")
     out_file_path = os.path.join(tmp_fo.name, out_file_name)
     with open(out_file_path, 'wb') as outfile:
         for fastq in fastq_list:
