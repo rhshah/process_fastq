@@ -16,7 +16,6 @@ import logging
 import subprocess
 import pathlib
 import tempfile
-from collections import defaultdict
 
 # Making logging possible
 logger = logging.getLogger("process_fastq")
@@ -58,6 +57,10 @@ def run(cutadapt_path, output_path, fastq_list, trim_length):
     if stderr is None:
         logger.debug("run_cutadapt: run: Read: %s", stdout.decode("utf-8"))
     else:
-        logger.error("run_cutadapt: run: could not run cutadapt for: %s", sample_id)
+        logger.error(
+            "run_cutadapt: run: could not run cutadapt for: %s and %s",
+            sample_id_1,
+            sample_id_2,
+        )
         exit(1)
     return [out_file_path_1, out_file_path_2]
