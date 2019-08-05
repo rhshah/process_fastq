@@ -205,7 +205,7 @@ def main(
             "link_fastq: run: the commandline is %s",
             bsub_cmd.encode("unicode_escape").decode("utf-8"),
         )
-        lsf_job_id = bsub(shlex.split(bsub_cmd))
+        bsub(bsub_cmd)
         logger.info(
             "Job submitted to lsf for sample %s, job id:%s", sample_id, lsf_job_id
         )
@@ -226,27 +226,30 @@ def read_excel(file):
     return pdataframe
 
 
-def bsub(args):
+def bsub(bsub_cmd):
     """
     Execute lsf bsub
     :param bsubline:
     :return:
     """
+    args = shlex.split(bsub_cmd)
     try:
-        proc = Popen(args)
+        proc = subprocess.Popen(args,stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         proc.wait()
         retcode = proc.returncode
         if retcode >= 0:
-            pass
+            output = proc.stdout.readline()
+            logger.info("link_fastq_juno: bsub: %s", output)
+            lsf_job_id = int(output.strip().split()[1].strip('<>'))
     except IOError as e:
         e = sys.exc_info()[0]
         logging.info(
             "Running of bsub command: %s \n has failed. The exception produced is %s Thus we will exit",
-            cmd,
+            bsub_cmd,
             e,
         )
         sys.exit(1)
-    return 0
+    return lsf_job_id
 
 
 if __name__ == "__main__":
