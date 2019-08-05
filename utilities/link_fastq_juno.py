@@ -136,7 +136,7 @@ def main(
     for index, row in p_dataframe.iterrows():
         sample_id = row["INVESTIGATOR_SAMPLE_ID"]
         if "," in row["INCLUDE_RUN_ID"]:
-            run_id = row["INCLUDE_RUN_ID"].split(",")
+            run_id = row["INCLUDE_RUN_ID"].split(";")
         else:
             run_id = row["INCLUDE_RUN_ID"]
         logger.info(
@@ -148,7 +148,7 @@ def main(
             process_fastq_cmd = (
                 process_fastq_path
                 + " -l "
-                + expected_read_length
+                + str(expected_read_length)
                 + " -s "
                 + sample_id
                 + " -r ".join(run_id)
