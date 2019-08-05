@@ -239,7 +239,7 @@ def bsub(bsub_cmd):
         if retcode >= 0:
             output = proc.stdout.readline().decode("utf-8")
             logger.info("link_fastq_juno: bsub: %s", output)
-            lsf_job_id = re.findall('\d+',output)
+            lsf_job_id = re.findall('\d+', output)
     except IOError as e:
         e = sys.exc_info()[0]
         logging.info(
