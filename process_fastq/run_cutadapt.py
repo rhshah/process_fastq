@@ -29,7 +29,7 @@ def run(cutadapt_path, output_path, fastq_list, trim_length):
         sample_id = p_path.name
         tmp_fo = tempfile.TemporaryDirectory(dir=output_path, prefix="cutadapt_")
         out_file_path = os.path.join(tmp_fo.name, sample_id)
-        cmd = cutadapt_path + " -l " + str(trim_length) + " " + out_file_path + " " + fastq_file
+        cmd = cutadapt_path + " --action none -l " + str(trim_length) + " -o " + out_file_path + " " + fastq_file
         logger.debug(
             "run_cutadapt: run: the commandline is %s",
             cmd.encode("unicode_escape").decode("utf-8"),
