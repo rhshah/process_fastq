@@ -16,8 +16,6 @@ import sys
 import logging
 import time
 import subprocess
-import shlex
-
 try:
     import click
 except ImportError as e:
