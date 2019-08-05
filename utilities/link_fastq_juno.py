@@ -188,7 +188,7 @@ def main(
             "bsub -cwd . "
             + "-J "
             + "link_fastq_"
-            + sample_id
+            + str(index)
             + " -g "
             + request_id
             + " -app anyOS"
