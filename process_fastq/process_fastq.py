@@ -16,6 +16,7 @@ import logging
 from collections import defaultdict
 import pathlib
 import shutil
+
 try:
     import pandas as pd
 except ImportError as e:
@@ -80,7 +81,9 @@ def run(
     run_dict = defaultdict(dict)
     if run_id and request_id:
         if len(run_id) == 1:
-            logger.debug("process_fastq:run: I am in where run id and request_id are present and there is only one run id")
+            logger.debug(
+                "process_fastq:run: I am in where run id and request_id are present and there is only one run id"
+            )
             glob_file_path, target_path_to_link, fastq_list, read_length_list = get_sample_level_information(
                 fastq_path, output_path, sample_id, run_id[0], request_id
             )
@@ -90,7 +93,10 @@ def run(
             for item in os.listdir(glob_file_path):
                 if "SampleSheet" in item:
                     try:
-                        os.symlink(os.path.join(glob_file_path, item), os.path.join(target_path_to_link, item))
+                        os.symlink(
+                            os.path.join(glob_file_path, item),
+                            os.path.join(target_path_to_link, item),
+                        )
                     except OSError as e:
                         logger.info("procees_fastq: run: cannot create symlink %s", e)
                         exit(1)
@@ -112,13 +118,15 @@ def run(
                                 os.path.join(target_path_to_link, item),
                             )
                         except OSError as e:
-                            logger.info("procees_fastq: run: cannot create symlink %s", e)
+                            logger.info(
+                                "procees_fastq: run: cannot create symlink %s", e
+                            )
                             exit(1)
             else:
                 logger.info("procees_fastq: run: running cutadapt")
                 trimmed_fastq = rc.run(
-                        cutadapt_path, target_path_to_link, fastq_list, trim_length
-                    )
+                    cutadapt_path, target_path_to_link, fastq_list, trim_length
+                )
                 for fq in trimmed_fastq:
                     try:
                         shutil.move(fq, target_path_to_link)
@@ -126,7 +134,9 @@ def run(
                         logger.error("process_fastq:run: cannot move the fastq files")
                         exit(1)
         else:
-            logger.debug("process_fastq:run: I am in where run id and request_id are present and there are more then one run id")
+            logger.debug(
+                "process_fastq:run: I am in where run id and request_id are present and there are more then one run id"
+            )
             all_fq_r1_list = []
             all_fq_r2_list = []
             for r_id in run_id:
@@ -181,7 +191,9 @@ def run(
                 shutil.move(merge_fq_r2, target_path_to_link)
             except IOError as e:
                 logger.error("process_fastq:run: cannot move the fastq files")
-                trimmed_fastq = rc.run(cutadapt_path, target_path_to_link, fastq_list, trim_length)
+                trimmed_fastq = rc.run(
+                    cutadapt_path, target_path_to_link, fastq_list, trim_length
+                )
                 for fq in trimmed_fastq:
                     try:
                         shutil.move(fq, target_path_to_link)
@@ -190,7 +202,9 @@ def run(
                         exit(1)
     elif run_id and request_id is None:
         if len(run_id) == 1:
-            logger.debug("process_fastq:run: I am in where run id is present and request_id is not present and there is only one run id")
+            logger.debug(
+                "process_fastq:run: I am in where run id is present and request_id is not present and there is only one run id"
+            )
             glob_file_path, target_path_to_link, fastq_list, read_length_list = get_sample_level_information(
                 fastq_path, output_path, sample_id, run_id[0], request_id
             )
@@ -200,14 +214,12 @@ def run(
             for item in os.listdir(glob_file_path):
                 if "SampleSheet" in item:
                     try:
-                            os.symlink(
-                                os.path.join(glob_file_path, item),
-                                os.path.join(target_path_to_link, item),
-                            )
+                        os.symlink(
+                            os.path.join(glob_file_path, item),
+                            os.path.join(target_path_to_link, item),
+                        )
                     except OSError as e:
-                            logger.info(
-                                "procees_fastq: run: cannot create symlink %s", e
-                            )
+                        logger.info("procees_fastq: run: cannot create symlink %s", e)
                         exit(1)
             check_value, trim_length = compare_read_length(
                 read_length_list,
@@ -227,12 +239,16 @@ def run(
                                 os.path.join(target_path_to_link, item),
                             )
                         except OSError as e:
-                            logger.error("procees_fastq: run: cannot create symlink %s", e)
+                            logger.error(
+                                "procees_fastq: run: cannot create symlink %s", e
+                            )
                             exit(1)
             else:
                 logger.info("procees_fastq: run: running cutadapt")
         else:
-            logger.debug("process_fastq:run: I am in where run id is present and request_id is not present and there are more than one run id")
+            logger.debug(
+                "process_fastq:run: I am in where run id is present and request_id is not present and there are more than one run id"
+            )
             all_fq_r1_list = []
             all_fq_r2_list = []
             for r_id in run_id:
@@ -289,7 +305,9 @@ def run(
                 logger.error("process_fastq:run: cannot move the fastq files")
                 exit(1)
     else:
-        logger.debug("process_fastq:run: I am in where run id is not present and request_id is not present")
+        logger.debug(
+            "process_fastq:run: I am in where run id is not present and request_id is not present"
+        )
         glob_file_path = gdp.make_path(fastq_path, sample_id, run_id, request_id)
         logger.info(
             "process_fastq: run: the path to search for files: %s", glob_file_path
