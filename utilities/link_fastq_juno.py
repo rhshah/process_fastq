@@ -189,12 +189,12 @@ def main(
             + "-J "
             + "link_fastq_"
             + str(index)
-            + " -g "
+            + " -g group_"
             + request_id
             + " -app anyOS"
-            + " -R select[mem > 12]"
-            + " -R rusage[mem=12]"
-            + " -R select[type==CentOS7]"
+            + " -R 'select[mem > 12]'"
+            + " -R 'rusage[mem=12]'"
+            + " -R 'select[type==CentOS7]'"
             + " -M 12"
             + " -n 1"
             + ' -W 360 "'
