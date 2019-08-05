@@ -136,33 +136,33 @@ def run(
                     fastq_path,
                     fastq_list,
                 )
-            if check_value:
-                for fq in fastq_list:
-                    if "R1" in fq:
-                        all_fq_r1_list.append(fq)
-                    else:
-                        all_fq_r2_list.append(fq)
-            else:
-                logger.info("procees_fastq: run: running cutadapt")
-                trimmed_fastq = rc.run(
-                    cutadapt_path, target_path_to_link, fastq_list, trim_length
-                )
-                for fq in trimmed_fastq:
-                    if "R1" in fq:
-                        all_fq_r1_list.append(fq)
-                    else:
-                        all_fq_r2_list.append(fq)
+                if check_value:
+                    for fq in fastq_list:
+                        if "R1" in fq:
+                            all_fq_r1_list.append(fq)
+                        else:
+                            all_fq_r2_list.append(fq)
+                else:
+                    logger.info("procees_fastq: run: running cutadapt")
+                    trimmed_fastq = rc.run(
+                        cutadapt_path, target_path_to_link, fastq_list, trim_length
+                    )
+                    for fq in trimmed_fastq:
+                        if "R1" in fq:
+                            all_fq_r1_list.append(fq)
+                        else:
+                            all_fq_r2_list.append(fq)
 
-        merge_fq_r1 = hp.merge_fastq(all_fq_r1_list, target_path_to_link)
-        merge_fq_r2 = hp.merge_fastq(all_fq_r1_list, target_path_to_link)
-        logger.info("process_fastq:run: Merged fastq R1:%s", merge_fq_r1)
-        logger.info("process_fastq:run: Merged fastq R2:%s", merge_fq_r2)
-        try:
-            shutil.move(merge_fq_r1, target_path_to_link)
-            shutil.move(merge_fq_r2, target_path_to_link)
-        except IOError as e:
-            logger.error("process_fastq:run: cannot move the fastq files")
-            exit(1)
+            merge_fq_r1 = hp.merge_fastq(all_fq_r1_list, target_path_to_link)
+            merge_fq_r2 = hp.merge_fastq(all_fq_r1_list, target_path_to_link)
+            logger.info("process_fastq:run: Merged fastq R1:%s", merge_fq_r1)
+            logger.info("process_fastq:run: Merged fastq R2:%s", merge_fq_r2)
+            try:
+                shutil.move(merge_fq_r1, target_path_to_link)
+                shutil.move(merge_fq_r2, target_path_to_link)
+            except IOError as e:
+                logger.error("process_fastq:run: cannot move the fastq files")
+                exit(1)
     elif run_id and request_id is None:
         if len(run_id) == 1:
             logger.debug("process_fastq:run: I am in where run id is present and request_id is not present and there is only one run id")
@@ -221,33 +221,33 @@ def run(
                     fastq_path,
                     fastq_list,
                 )
-            if check_value:
-                for fq in fastq_list:
-                    if "R1" in fq:
-                        all_fq_r1_list.append(fq)
-                    else:
-                        all_fq_r2_list.append(fq)
-            else:
-                logger.info("procees_fastq: run: running cutadapt")
-                trimmed_fastq = rc.run(
-                    cutadapt_path, target_path_to_link, fastq_list, trim_length
-                )
-                for fq in trimmed_fastq:
-                    if "R1" in fq:
-                        all_fq_r1_list.append(fq)
-                    else:
-                        all_fq_r2_list.append(fq)
+                if check_value:
+                    for fq in fastq_list:
+                        if "R1" in fq:
+                            all_fq_r1_list.append(fq)
+                        else:
+                            all_fq_r2_list.append(fq)
+                else:
+                    logger.info("procees_fastq: run: running cutadapt")
+                    trimmed_fastq = rc.run(
+                        cutadapt_path, target_path_to_link, fastq_list, trim_length
+                    )
+                    for fq in trimmed_fastq:
+                        if "R1" in fq:
+                            all_fq_r1_list.append(fq)
+                        else:
+                            all_fq_r2_list.append(fq)
 
-        merge_fq_r1 = hp.merge_fastq(all_fq_r1_list, target_path_to_link)
-        merge_fq_r2 = hp.merge_fastq(all_fq_r1_list, target_path_to_link)
-        logger.info("process_fastq:run: Merged fastq R1:%s", merge_fq_r1)
-        logger.info("process_fastq:run: Merged fastq R2:%s", merge_fq_r2)
-        try:
-            shutil.move(merge_fq_r1, target_path_to_link)
-            shutil.move(merge_fq_r2, target_path_to_link)
-        except IOError as e:
-            logger.error("process_fastq:run: cannot move the fastq files")
-            exit(1)
+            merge_fq_r1 = hp.merge_fastq(all_fq_r1_list, target_path_to_link)
+            merge_fq_r2 = hp.merge_fastq(all_fq_r1_list, target_path_to_link)
+            logger.info("process_fastq:run: Merged fastq R1:%s", merge_fq_r1)
+            logger.info("process_fastq:run: Merged fastq R2:%s", merge_fq_r2)
+            try:
+                shutil.move(merge_fq_r1, target_path_to_link)
+                shutil.move(merge_fq_r2, target_path_to_link)
+            except IOError as e:
+                logger.error("process_fastq:run: cannot move the fastq files")
+                exit(1)
     else:
         logger.debug("process_fastq:run: I am in where run id is not present and request_id is not present")
         glob_file_path = gdp.make_path(fastq_path, sample_id, run_id, request_id)
