@@ -151,6 +151,7 @@ def main(
                 + str(expected_read_length)
                 + " -s "
                 + sample_id
+                + " -r "
                 + " -r ".join(run_id)
                 + " "
                 + " -p "
