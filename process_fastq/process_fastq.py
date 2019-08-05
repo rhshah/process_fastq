@@ -94,15 +94,15 @@ def run(
                 fastq_list,
             )
             if check_value:
-                try:
-                    for item in os.listdir(glob_file_path):
+                for item in os.listdir(glob_file_path):
+                    try:
                         os.symlink(
                             os.path.join(glob_file_path, item),
                             os.path.join(target_path_to_link, item),
                         )
-                except OSError as e:
-                    logger.info("procees_fastq: run: cannot create symlink")
-                    exit(1)
+                    except OSError as e:
+                        logger.info("procees_fastq: run: cannot create symlink")
+                        exit(1)
             else:
                 logger.info("procees_fastq: run: running cutadapt")
         else:
@@ -144,14 +144,15 @@ def run(
                 fastq_list,
             )
             if check_value:
-                try:
-                    os.symlink(
-                        os.path.join(glob_file_path, "/*"),
-                        os.path.join(target_path_to_link, "/"),
-                    )
-                except OSError as e:
-                    logger.info("procees_fastq: run: cannot create symlink")
-                    exit(1)
+                for item in os.listdir(glob_file_path):
+                    try:
+                        os.symlink(
+                            os.path.join(glob_file_path, item),
+                            os.path.join(target_path_to_link, item),
+                        )
+                    except OSError as e:
+                        logger.info("procees_fastq: run: cannot create symlink")
+                        exit(1)
             else:
                 logger.info("procees_fastq: run: running cutadapt")
         else:
