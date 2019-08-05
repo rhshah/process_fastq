@@ -125,7 +125,7 @@ def run(
             else:
                 logger.info("procees_fastq: run: running cutadapt")
                 trimmed_fastq = rc.run(
-                    cutadapt_path, target_path_to_link, fastq_list, trim_length
+                    cutadapt_path, target_path_to_link, fastq_list, expected_read_length
                 )
                 for fq in trimmed_fastq:
                     try:
@@ -174,7 +174,7 @@ def run(
                 else:
                     logger.info("procees_fastq: run: running cutadapt")
                     trimmed_fastq = rc.run(
-                        cutadapt_path, target_path_to_link, fastq_list, trim_length
+                        cutadapt_path, target_path_to_link, fastq_list, expected_read_length
                     )
                     for fq in trimmed_fastq:
                         if "R1" in fq:
@@ -192,7 +192,7 @@ def run(
             except IOError as e:
                 logger.error("process_fastq:run: cannot move the fastq files")
                 trimmed_fastq = rc.run(
-                    cutadapt_path, target_path_to_link, fastq_list, trim_length
+                    cutadapt_path, target_path_to_link, fastq_list, expected_read_length
                 )
                 for fq in trimmed_fastq:
                     try:
@@ -246,7 +246,7 @@ def run(
             else:
                 logger.info("procees_fastq: run: running cutadapt")
                 trimmed_fastq = rc.run(
-                    cutadapt_path, target_path_to_link, fastq_list, trim_length
+                    cutadapt_path, target_path_to_link, fastq_list, expected_read_length
                 )
                 for fq in trimmed_fastq:
                     try:
@@ -295,7 +295,7 @@ def run(
                 else:
                     logger.info("procees_fastq: run: running cutadapt")
                     trimmed_fastq = rc.run(
-                        cutadapt_path, target_path_to_link, fastq_list, trim_length
+                        cutadapt_path, target_path_to_link, fastq_list, expected_read_length
                     )
                     for fq in trimmed_fastq:
                         if "R1" in fq:
@@ -356,7 +356,7 @@ def run(
             else:
                 logger.info("procees_fastq: run: running cutadapt")
                 trimmed_fastq = rc.run(
-                    cutadapt_path, target_path_to_link, fastq_list, trim_length
+                    cutadapt_path, target_path_to_link, fastq_list, expected_read_length
                 )
                 for fq in trimmed_fastq:
                     if "R1" in fq:
