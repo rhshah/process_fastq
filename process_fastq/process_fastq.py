@@ -95,10 +95,11 @@ def run(
             )
             if check_value:
                 try:
-                    os.symlink(
-                        os.path.join(glob_file_path, "/*"),
-                        os.path.join(target_path_to_link, "/*"),
-                    )
+                    for item in os.listdir(glob_file_path):
+                        os.symlink(
+                            os.path.join(glob_file_path, item),
+                            os.path.join(target_path_to_link, item),
+                        )
                 except OSError as e:
                     logger.info("procees_fastq: run: cannot create symlink")
                     exit(1)
