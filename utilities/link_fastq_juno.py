@@ -167,7 +167,7 @@ def main(
             process_fastq_cmd = (
                 process_fastq_path
                 + " -l "
-                + expected_read_length
+                + str(expected_read_length)
                 + " -s "
                 + sample_id
                 + " -r "
