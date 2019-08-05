@@ -245,6 +245,15 @@ def run(
                             exit(1)
             else:
                 logger.info("procees_fastq: run: running cutadapt")
+                trimmed_fastq = rc.run(
+                    cutadapt_path, target_path_to_link, fastq_list, trim_length
+                )
+                for fq in trimmed_fastq:
+                    try:
+                        shutil.move(fq, target_path_to_link)
+                    except IOError as e:
+                        logger.error("process_fastq:run: cannot move the fastq files")
+                        exit(1)
         else:
             logger.debug(
                 "process_fastq:run: I am in where run id is present and request_id is not present and there are more than one run id"
