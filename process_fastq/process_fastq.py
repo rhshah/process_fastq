@@ -165,30 +165,13 @@ def run(
             exit(1)
     elif run_id and request_id is None:
         if len(run_id) == 1:
-            logger.debug("process_fastq:run: I am in where run id is present and  request_id is not present and there is only one run id")
+            logger.debug("process_fastq:run: I am in where run id is present and request_id is not present and there is only one run id")
             glob_file_path, target_path_to_link, fastq_list, read_length_list = get_sample_level_information(
                 fastq_path, output_path, sample_id, run_id[0], request_id
             )
             run_dict[run_id]["path"] = glob_file_path
             run_dict[run_id]["fastq_list"] = fastq_list
             run_dict[run_id]["read_length"] = read_length_list
-            for item in os.listdir(glob_file_path):
-                if "SampleSheet" in item:
-                    try:
-                        os.symlink(
-                            os.path.join(glob_file_path, item),
-                            os.path.join(target_path_to_link, item),
-                        )
-                    except OSError as e:
-                        logger.info("procees_fastq: run: cannot create symlink %s", e)
-                        exit(1)
-            compare_read_length(
-                read_length_list,
-                expected_read_length,
-                glob_file_path,
-                fastq_path,
-                fastq_list,
-            )
             check_value, trim_length = compare_read_length(
                 read_length_list,
                 expected_read_length,
