@@ -23,9 +23,9 @@ logger = logging.getLogger("process_fastq")
 
 
 def run(cutadapt_path, output_path, fastq_list, trim_length):
-    p_path_1 = pathlib.Path(fastq_file[0])
+    p_path_1 = pathlib.Path(fastq_list[0])
     sample_id_1 = p_path_1.name
-    p_path_2 = pathlib.Path(fastq_file[1])
+    p_path_2 = pathlib.Path(fastq_list[1])
     sample_id_2 = p_path_2.name
     tmp_fo = tempfile.TemporaryDirectory(dir=output_path, prefix="cutadapt_")
     out_file_path_1 = os.path.join(tmp_fo.name, sample_id_1)
