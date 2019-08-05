@@ -135,7 +135,7 @@ def main(
     p_dataframe = read_excel(manifest_file)
     for index, row in p_dataframe.iterrows():
         sample_id = row["INVESTIGATOR_SAMPLE_ID"]
-        if "," in row["INCLUDE_RUN_ID"]:
+        if ";" in row["INCLUDE_RUN_ID"]:
             run_id = row["INCLUDE_RUN_ID"].split(";")
         else:
             run_id = row["INCLUDE_RUN_ID"]
