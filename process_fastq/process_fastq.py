@@ -90,14 +90,9 @@ def run(
             for item in os.listdir(glob_file_path):
                 if "SampleSheet" in item:
                     try:
-                            os.symlink(
-                                os.path.join(glob_file_path, item),
-                                os.path.join(target_path_to_link, item),
-                            )
+                        os.symlink(os.path.join(glob_file_path, item), os.path.join(target_path_to_link, item))
                     except OSError as e:
-                            logger.info(
-                                "procees_fastq: run: cannot create symlink %s", e
-                            )
+                        logger.info("procees_fastq: run: cannot create symlink %s", e)
                         exit(1)
             check_value, trim_length = compare_read_length(
                 read_length_list,
