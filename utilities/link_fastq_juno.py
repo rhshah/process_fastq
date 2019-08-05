@@ -197,7 +197,7 @@ def main(
             "link_fastq: run: the commandline is %s",
             bsub_cmd.encode("unicode_escape").decode("utf-8"),
         )
-        lsf_job_id = bsub(shlex.split(bsub_cmd))
+        lsf_job_id = bsub(bsub_cmd)
         logger.info(
             "Job submitted to lsf for sample %s, job id:%s", sample_id, lsf_job_id
         )
