@@ -191,10 +191,11 @@ def main(
             + " -R select[mem > 12]"
             + " -R rusage[mem=12]"
             + " -R select[type==CentOS7]"
-            + " -M 20"
+            + " -M 12"
             + " -n 1"
-            + " -W 360 "
+            + " -W 360 \'"
             + process_fastq_cmd
+            + "\'"
         )
         logger.debug(
             "link_fastq: run: the commandline is %s",
