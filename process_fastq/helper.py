@@ -70,14 +70,21 @@ def make_directory(name, path):
     return dirName
 
 
-def merge_fastq(fastq_list, output_path):
-    p_path = pathlib.Path(fastq_list[0])
-    out_file_name = p_path.name
+def merge_fastq(fastq_list_R1, fastq_list_R2, output_path):
+    p_path_1 = pathlib.Path(fastq_list_R1[0])
+    p_path_2 = pathlib.Path(fastq_list_R2[0])
+    out_file_name_1 = p_path_1.name
+    out_file_name_2 = p_path_2.name
     tmp_fo = tempfile.mkdtemp(dir=output_path, prefix="mergefastq_")
-    out_file_path = os.path.join(tmp_fo.name, out_file_name)
-    with open(out_file_path, 'wb') as outfile:
-        for fastq in fastq_list:
+    out_file_path_1 = os.path.join(tmp_fo, out_file_name_1)
+    out_file_path_2 = os.path.join(tmp_fo, out_file_name_2)
+    with open(out_file_path_1, 'wb') as outfile:
+        for fastq in fastq_list_R1:
             with open(fastq, 'rb') as infile:
                 shutil.copyfileobj(infile, outfile)
-    return out_file_path
+    with open(out_file_path_2, 'wb') as outfile:
+        for fastq in fastq_list_R2:
+            with open(fastq, 'rb') as infile:
+                shutil.copyfileobj(infile, outfile)
+    return [out_file_path_1, out_file_path_2]
 

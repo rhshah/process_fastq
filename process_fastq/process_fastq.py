@@ -181,8 +181,7 @@ def run(
                         else:
                             all_fq_r2_list.append(fq)
 
-            merge_fq_r1 = hp.merge_fastq(all_fq_r1_list, target_path_to_link)
-            merge_fq_r2 = hp.merge_fastq(all_fq_r2_list, target_path_to_link)
+            merge_fq_r1, merge_fq_r2 = hp.merge_fastq(all_fq_r1_list, all_fq_r2_list, target_path_to_link)
             logger.info("process_fastq:run: Merged fastq R1:%s", merge_fq_r1)
             logger.info("process_fastq:run: Merged fastq R2:%s", merge_fq_r2)
             try:
@@ -299,8 +298,7 @@ def run(
                         else:
                             all_fq_r2_list.append(fq)
 
-            merge_fq_r1 = hp.merge_fastq(all_fq_r1_list, target_path_to_link)
-            merge_fq_r2 = hp.merge_fastq(all_fq_r2_list, target_path_to_link)
+            merge_fq_r1, merge_fq_r2 = hp.merge_fastq(all_fq_r1_list, all_fq_r2_list, target_path_to_link)
             logger.info("process_fastq:run: Merged fastq R1:%s", merge_fq_r1)
             logger.info("process_fastq:run: Merged fastq R2:%s", merge_fq_r2)
             try:
@@ -359,8 +357,7 @@ def run(
                     else:
                         all_fq_r2_list.append(fq)
 
-        merge_fq_r1 = hp.merge_fastq(all_fq_r1_list, target_path_to_link)
-        merge_fq_r2 = hp.merge_fastq(all_fq_r2_list, target_path_to_link)
+        merge_fq_r1, merge_fq_r2 = hp.merge_fastq(all_fq_r1_list, all_fq_r2_list, target_path_to_link)
         logger.info("process_fastq:run: Merged fastq R1:%s", merge_fq_r1)
         logger.info("process_fastq:run: Merged fastq R2:%s", merge_fq_r2)
         try:
