@@ -28,11 +28,14 @@ This package will help process, merge and link fastq in user specified directory
 * Free software: Apache Software License 2.0
 * Documentation: https://process-fastq.readthedocs.io.
 
+Usage
+-----
+
+Usage can be found here: https://process-fastq.readthedocs.io/en/latest/usage.html
+
 
 Features
 --------
-
-* TODO
 
 1. Given Manifest file, path to location of raw fastq, path to where they need to linked:
   a. Get all the folders for the samples and the fastq file
