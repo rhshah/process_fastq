@@ -33,7 +33,7 @@ Example commandline:
 
     .. code-block:: console
     
-       $ link_fastq_juno.py \
+       $ python3 link_fastq_juno.py \
        -p request_id \
        -m /path/to/manifest.xlsx \
        -pfp /path/to/process_fastq \
