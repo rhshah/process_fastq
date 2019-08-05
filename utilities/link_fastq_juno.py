@@ -188,9 +188,7 @@ def main(
             "bsub -cwd . "
             + "-J "
             + "link_fastq_"
-            + str(index)
-            + " -g group_"
-            + request_id
+            + sample_id
             + " -app anyOS"
             + " -R 'select[mem > 12]'"
             + " -R 'rusage[mem=12]'"
