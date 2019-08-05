@@ -73,8 +73,9 @@ def merge_fastq(fastq_list, output_path):
     p_path = pathlib.Path(fastq_list[0])
     out_file_name = p_path.name
     out_file_path = os.path.join(output_path, out_file_name)
-    with open(out_file_path, 'w') as outfile:
-        for infile in fastq_list:
-            shutil.copyfileobj(open(infile), outfile)
+    with open(out_file_path, 'wb') as outfile:
+        for fastq in fastq_list:
+            with open(fastq, 'rb') as infile:
+                shutil.copyfileobj(infile, outfile)
     return out_file_path
 
