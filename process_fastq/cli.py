@@ -9,7 +9,7 @@ try:
     import click
 except ImportError as e:
     print(
-        "cli: click is not installed, please install pandas as it is one of \
+        "cli: click is not installed, please install click as it is one of \
             the requirements."
     )
     exit(1)
@@ -17,7 +17,7 @@ try:
     import click_log
 except ImportError as e:
     print(
-        "cli: click-log is not installed, please install pandas as it is one \
+        "cli: click-log is not installed, please install click_log as it is one \
             of the requirements."
     )
     exit(1)
