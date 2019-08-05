@@ -432,4 +432,3 @@ def compare_read_length(
         )
         exit(1)
     return [value, trim_length]
-

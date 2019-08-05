@@ -17,6 +17,7 @@ import logging
 import time
 import subprocess
 import shlex
+
 try:
     import click
 except ImportError as e:
@@ -196,9 +197,9 @@ def main(
             + " -R select[type==CentOS7]"
             + " -M 12"
             + " -n 1"
-            + " -W 360 \""
+            + ' -W 360 "'
             + process_fastq_cmd
-            + "\""
+            + '"'
         )
         logger.debug(
             "link_fastq: run: the commandline is %s",
@@ -225,26 +226,26 @@ def read_excel(file):
     return pdataframe
 
 
-def bsub(bsub_cmd):
+def bsub(args):
     """
     Execute lsf bsub
     :param bsubline:
     :return:
     """
-    out = subprocess.Popen(
-        (bsub_cmd),
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        shell=True,
-    )
-    stdout, stderr = out.communicate()
-    if stderr is None:
-        logger.debug("link_fastq: bsub: Read: %s", stdout.decode("utf-8"))
-    else:
-        logger.error("link_fastq: bsub: could not run link_fastq for")
-        exit(1)
-
+    try:
+        proc = Popen(args)
+        proc.wait()
+        retcode = proc.returncode
+        if retcode >= 0:
+            pass
+    except IOError as e:
+        e = sys.exc_info()[0]
+        logging.info(
+            "Running of bsub command: %s \n has failed. The exception produced is %s Thus we will exit",
+            cmd,
+            e,
+        )
+        sys.exit(1)
     return 0
 
 
