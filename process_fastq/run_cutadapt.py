@@ -23,29 +23,39 @@ logger = logging.getLogger("process_fastq")
 
 
 def run(cutadapt_path, output_path, fastq_list, trim_length):
-    trimmed_fastq = []
-    for fastq_file in fastq_list:
-        p_path = pathlib.Path(fastq_file)
-        sample_id = p_path.name
-        tmp_fo = tempfile.TemporaryDirectory(dir=output_path, prefix="cutadapt_")
-        out_file_path = os.path.join(tmp_fo.name, sample_id)
-        cmd = cutadapt_path + " --action none -l " + str(trim_length) + " -o " + out_file_path + " " + fastq_file
-        logger.debug(
-            "run_cutadapt: run: the commandline is %s",
-            cmd.encode("unicode_escape").decode("utf-8"),
-        )
-        out = subprocess.Popen(
-            (cmd),
-            stdin=subprocess.PIPE,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            shell=True,
-        )
-        stdout, stderr = out.communicate()
-        if stderr is None:
-            logger.debug("run_cutadapt: run: Read: %s", stdout.decode("utf-8"))
-        else:
-            logger.error("run_cutadapt: run: could not run cutadapt for: %s", sample_id)
-            exit(1)
-        trimmed_fastq.append(out_file_path)
-    return trimmed_fastq
+    p_path_1 = pathlib.Path(fastq_file[0])
+    sample_id_1 = p_path_1.name
+    p_path_2 = pathlib.Path(fastq_file[1])
+    sample_id_2 = p_path_2.name
+    tmp_fo = tempfile.TemporaryDirectory(dir=output_path, prefix="cutadapt_")
+    out_file_path_1 = os.path.join(tmp_fo.name, sample_id_1)
+    out_file_path_1 = os.path.join(tmp_fo.name, sample_id_2)
+    cmd = (
+        cutadapt_path
+        + " --action none -l "
+        + str(trim_length)
+        + " -o "
+        + out_file_path_1
+        + " -p "
+        + out_file_path_2
+        + " "
+        + fastq_file
+    )
+    logger.debug(
+        "run_cutadapt: run: the commandline is %s",
+        cmd.encode("unicode_escape").decode("utf-8"),
+    )
+    out = subprocess.Popen(
+        (cmd),
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        shell=True,
+    )
+    stdout, stderr = out.communicate()
+    if stderr is None:
+        logger.debug("run_cutadapt: run: Read: %s", stdout.decode("utf-8"))
+    else:
+        logger.error("run_cutadapt: run: could not run cutadapt for: %s", sample_id)
+        exit(1)
+    return [out_file_path_1, out_file_path_2]
