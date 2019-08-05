@@ -39,7 +39,9 @@ def run(cutadapt_path, output_path, fastq_list, trim_length):
         + " -p "
         + out_file_path_2
         + " "
-        + fastq_file
+        + fastq_list[0]
+        + " "
+        + fastq_list[1]
     )
     logger.debug(
         "run_cutadapt: run: the commandline is %s",
