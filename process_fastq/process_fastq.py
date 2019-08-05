@@ -154,10 +154,9 @@ def run(
                                 os.path.join(target_path_to_link, item),
                             )
                         except OSError as e:
-                            logger.info(
+                            logger.warning(
                                 "procees_fastq: run: cannot create symlink %s", e
                             )
-                            exit(1)
                 check_value, trim_length = compare_read_length(
                     read_length_list,
                     expected_read_length,
@@ -219,8 +218,7 @@ def run(
                             os.path.join(target_path_to_link, item),
                         )
                     except OSError as e:
-                        logger.info("procees_fastq: run: cannot create symlink %s", e)
-                        exit(1)
+                        logger.warning("procees_fastq: run: cannot create symlink %s", e)
             check_value, trim_length = compare_read_length(
                 read_length_list,
                 expected_read_length,
@@ -239,10 +237,9 @@ def run(
                                 os.path.join(target_path_to_link, item),
                             )
                         except OSError as e:
-                            logger.error(
+                            logger.warning(
                                 "procees_fastq: run: cannot create symlink %s", e
                             )
-                            exit(1)
             else:
                 logger.info("procees_fastq: run: running cutadapt")
                 trimmed_fastq = rc.run(
@@ -275,10 +272,9 @@ def run(
                                 os.path.join(target_path_to_link, item),
                             )
                         except OSError as e:
-                            logger.info(
+                            logger.warning(
                                 "procees_fastq: run: cannot create symlink %s", e
                             )
-                            exit(1)
                 check_value, trim_length = compare_read_length(
                     read_length_list,
                     expected_read_length,
@@ -342,8 +338,7 @@ def run(
                             os.path.join(target_path_to_link, item),
                         )
                     except OSError as e:
-                        logger.info("procees_fastq: run: cannot create symlink %s", e)
-                        exit(1)
+                        logger.warning("procees_fastq: run: cannot create symlink %s", e)
             check_value, trim_length = compare_read_length(
                 read_length_list, expected_read_length, m_path, fastq_path, fastq_list
             )
