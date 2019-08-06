@@ -24,7 +24,7 @@ for line in sys.stdin:
 endef
 export PRINT_HELP_PYSCRIPT
 
-BROWSER := python -c "$$BROWSER_PYSCRIPT"
+BROWSER := python3 -c "$$BROWSER_PYSCRIPT"
 
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
@@ -54,7 +54,7 @@ lint: ## check style with flake8
 	flake8 process_fastq tests
 
 test: ## run tests quickly with the default Python
-	python setup.py test
+	python3 setup.py test
 
 test-all: ## run tests on every Python version with tox
 	tox
