@@ -38,13 +38,16 @@ Description: console script for running process_fastq
 @author: Ronak H Shah
 """
 
+version = None
+with open("./__init__.py", "r") as f:
+    for line in f.readlines():
+        line = line.strip()
+        if line.startswith("__version__"):
+            version = line.split("=")[-1].strip()
 __all__ = []
-__version_info__ = ("2", "0", "2")
-__version__ = ".".join(__version_info__)
+__version__ = version
 __date__ = "2019-07-27"
 __updated__ = "2019-07-28"
-
-
 # Making logging possible
 logger = logging.getLogger("process_fastq")
 click_log.basic_config(logger)
