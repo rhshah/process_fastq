@@ -39,7 +39,7 @@ Description: console script for running process_fastq
 """
 
 version = None
-with open("./__init__.py", "r") as f:
+with open("../process_fastq/__init__.py", "r") as f:
     for line in f.readlines():
         line = line.strip()
         if line.startswith("__version__"):
