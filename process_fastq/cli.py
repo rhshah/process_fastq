@@ -39,7 +39,7 @@ Description: console script for running process_fastq
 """
 
 __all__ = []
-__version_info__ = ("0", "1", "0")
+__version_info__ = ("1", "0", "0")
 __version__ = ".".join(__version_info__)
 __date__ = "2019-07-27"
 __updated__ = "2019-07-28"
