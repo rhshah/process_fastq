@@ -58,6 +58,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/rhshah/process_fastq",
-    version="2.0.7",
+    version="2.0.8-dev0",
     zip_safe=False,
 )
