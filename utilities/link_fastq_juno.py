@@ -146,7 +146,13 @@ def main(
             sample_id,
             run_id,
         )
-        if len(run_id) > 1:
+        if isinstance(run_id, list):
+            run_id = list(filter(None, run_id))
+            if len(run_id) > 1:
+                pass
+            else:
+                run_id = run_id[0]
+        if isinstance(run_id, list):
             process_fastq_cmd = (
                 process_fastq_path
                 + " -l "
