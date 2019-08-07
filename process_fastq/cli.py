@@ -4,7 +4,7 @@ import os
 import sys
 import logging
 import time
-
+import pathlib
 try:
     import click
 except ImportError as e:
@@ -39,7 +39,9 @@ Description: console script for running process_fastq
 """
 
 version = None
-with open("./process_fastq/__init__.py", "r") as f:
+scriptpath = os.path.realpath(__file__)
+p_scriptpath=pathlib.Path(scriptpath)
+with open(os.path.join(p_scriptpath.parent,"__init__.py"), "r") as f:
     for line in f.readlines():
         line = line.strip()
         if line.startswith("__version__"):
