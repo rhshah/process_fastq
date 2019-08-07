@@ -6,19 +6,19 @@ process_fastq
 .. image:: https://img.shields.io/pypi/v/process_fastq.svg
         :target: https://pypi.python.org/pypi/process_fastq
 
-.. image:: https://img.shields.io/travis/rhshah/process_fastq.svg
-        :target: https://travis-ci.org/rhshah/process_fastq
+.. image:: https://img.shields.io/travis/mskcc/process_fastq.svg
+        :target: https://travis-ci.org/mskcc/process_fastq
 
 .. image:: https://readthedocs.org/projects/process-fastq/badge/?version=latest
         :target: https://process-fastq.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://pyup.io/repos/github/rhshah/process_fastq/shield.svg
-     :target: https://pyup.io/repos/github/rhshah/process_fastq/
+.. image:: https://pyup.io/repos/github/mskcc/process_fastq/shield.svg
+     :target: https://pyup.io/repos/mskcc/rhshah/process_fastq/
      :alt: Updates
 
-.. image:: https://pyup.io/repos/github/rhshah/process_fastq/python-3-shield.svg
-     :target: https://pyup.io/repos/github/rhshah/process_fastq/
+.. image:: https://pyup.io/repos/github/mskcc/process_fastq/python-3-shield.svg
+     :target: https://pyup.io/repos/mskcc/rhshah/process_fastq/
      :alt: Python 3
 
 
