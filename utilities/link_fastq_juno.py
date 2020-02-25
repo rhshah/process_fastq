@@ -138,10 +138,10 @@ def main(
     for index, row in p_dataframe.iterrows():
         sample_id = row["INVESTIGATOR_SAMPLE_ID"]
         if hasattr(row, "Include_run_ID"):
-			if ";" in row["Include_run_ID"]:
-				run_id = row["Include_run_ID"].split(";")
-			else:
-				run_id = row["Include_run_ID"]
+            if ";" in row["Include_run_ID"]:
+                run_id = row["Include_run_ID"].split(";")
+            else:
+                run_id = row["Include_run_ID"]
         else:
             if ";" in row["INCLUDE_RUN_ID"]:
                 run_id = row["INCLUDE_RUN_ID"].split(";")
@@ -245,7 +245,7 @@ def bsub(bsub_cmd):
         if retcode >= 0:
             output = proc.stdout.readline().decode("utf-8")
             logger.info("link_fastq_juno: bsub: %s", output)
-            lsf_job_id = re.findall('\d+', output)
+            lsf_job_id = re.findall("\d+", output)
     except IOError as e:
         e = sys.exc_info()[0]
         logging.info(
