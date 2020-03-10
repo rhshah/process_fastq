@@ -11,6 +11,8 @@ Description: console script for running process_fastq on manifest level on juno
 @author: Ronak H Shah
 """
 
+
+try:
 import os
 import sys
 import logging
@@ -18,8 +20,6 @@ import time
 import subprocess
 import shlex
 import re
-
-try:
     import click
 except ImportError as e:
     print(
@@ -226,7 +226,8 @@ def main(
 
 def read_excel(file):
     logger.info("link_fastq: read_excel: Reading the excel file: %s", file)
-    pdataframe = pd.read_excel(file, sheet_name=0, keep_default_na="True", index_col=0)
+    pdataframe = pd.read_excel(
+        file, sheet_name=0, keep_default_na="True", index_col=0)
     logger.info("link_fastq: read_excel: Finished reading excel file: %s", file)
     return pdataframe
 
@@ -239,7 +240,8 @@ def bsub(bsub_cmd):
     """
     args = shlex.split(bsub_cmd)
     try:
-        proc = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        proc = subprocess.Popen(
+            args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         proc.wait()
         retcode = proc.returncode
         if retcode >= 0:
