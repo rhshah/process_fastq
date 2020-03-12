@@ -37,11 +37,11 @@ def make_path(dir_path, sample_id, run_id, request_id):
         glob_request_id = "*Proj*"
     logger.debug(
         "get_directory_paths: make_path: glob_request_id: %s", glob_request_id)
-    glob_sample_id = "*_" + sample_id + "_*"
+    glob_sample_id = "*_" + sample_id + "$"
     logger.debug(
         "get_directory_paths: make_path: glob_sample_id: %s", glob_sample_id)
     glob_path = os.path.join(dir_path, glob_run_id,
-                             glob_request_id, glob_sample_id)
+                             glob_request_id)
     logger.debug("get_directory_paths: make_path: glob_path: %s", glob_path)
 
     """
@@ -57,7 +57,7 @@ def make_path(dir_path, sample_id, run_id, request_id):
         cmd = (
             "find "
             + glob_path
-            + " -maxdepth 1 -type d -name "
+            + " -maxdepth 1 -type d -regex "
             + '"'
             + glob_sample_id
             + '"'
@@ -84,7 +84,7 @@ def make_path(dir_path, sample_id, run_id, request_id):
             glob_path = stdout.decode("utf-8").split("\n")[:-1]
         else:
             logger.error(
-                "get_directory_paths: make_path: could not fid the fastq files for: %s",
+                "get_directory_paths: make_path: could not find the fastq files for: %s",
                 sample_id,
             )
             exit(1)
