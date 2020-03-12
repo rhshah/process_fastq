@@ -49,7 +49,7 @@ setup(
     entry_points={"console_scripts": ["process_fastq=process_fastq.cli:main"]},
     install_requires=requirements,
     license="Apache Software License 2.0",
-    long_description=readme + "\n\n" + history,
+    long_description="https://github.com/rhshah/process_fastq",
     include_package_data=True,
     keywords="process_fastq",
     name="process_fastq",
