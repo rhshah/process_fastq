@@ -40,7 +40,7 @@ Description: console script for running process_fastq
 
 version = None
 version_file = pathlib.Path(__file__).parent.absolute() / \
-    'process_fastq' / '__init__.py'
+    '__init__.py'
 with open(version_file, "r") as f:
     for line in f.readlines():
         line = line.strip()
