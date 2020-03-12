@@ -5,10 +5,6 @@ import sys
 import logging
 import time
 import pathlib
-<<<<<<< HEAD
-=======
-
->>>>>>> release/2.1.0
 try:
     import click
 except ImportError as e:
