@@ -4,6 +4,7 @@ import os
 import sys
 import logging
 import time
+import pathlib
 
 try:
     import click
@@ -39,7 +40,9 @@ Description: console script for running process_fastq
 """
 
 version = None
-with open("./process_fastq/__init__.py", "r") as f:
+version_file = pathlib.Path(__file__).parent.absolute() / \
+    'process_fastq' / '__init__.py'
+with open(version_file, "r") as f:
     for line in f.readlines():
         line = line.strip()
         if line.startswith("__version__"):

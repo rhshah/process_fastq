@@ -75,7 +75,8 @@ def run(
     logger.info("procees_fastq: run: run id: %s", run_id)
     logger.info("procees_fastq: run: request id: %s", request_id)
     logger.info("procees_fastq: run: fastq path: %s", fastq_path)
-    logger.info("procees_fastq: run: expected read length: %d", expected_read_length)
+    logger.info("procees_fastq: run: expected read length: %d",
+                expected_read_length)
     logger.info("procees_fastq: run: output path: %s", output_path)
     logger.info("procees_fastq: run: cutadapt path: %s", cutadapt_path)
     run_dict = defaultdict(dict)
@@ -98,7 +99,8 @@ def run(
                             os.path.join(target_path_to_link, item),
                         )
                     except OSError as e:
-                        logger.info("procees_fastq: run: cannot create symlink %s", e)
+                        logger.info(
+                            "procees_fastq: run: cannot create symlink %s", e)
                         exit(1)
             check_value, trim_length = compare_read_length(
                 read_length_list,
@@ -131,7 +133,8 @@ def run(
                     try:
                         shutil.move(fq, target_path_to_link)
                     except IOError as e:
-                        logger.error("process_fastq:run: cannot move the fastq files")
+                        logger.error(
+                            "process_fastq:run: cannot move the fastq files")
                         exit(1)
         else:
             logger.debug(
@@ -181,7 +184,8 @@ def run(
                         else:
                             all_fq_r2_list.append(fq)
 
-            merge_fq_r1, merge_fq_r2 = hp.merge_fastq(all_fq_r1_list, all_fq_r2_list, target_path_to_link)
+            merge_fq_r1, merge_fq_r2 = hp.merge_fastq(
+                all_fq_r1_list, all_fq_r2_list, target_path_to_link)
             logger.info("process_fastq:run: Merged fastq R1:%s", merge_fq_r1)
             logger.info("process_fastq:run: Merged fastq R2:%s", merge_fq_r2)
             try:
@@ -196,7 +200,8 @@ def run(
                     try:
                         shutil.move(fq, target_path_to_link)
                     except IOError as e:
-                        logger.error("process_fastq:run: cannot move the fastq files")
+                        logger.error(
+                            "process_fastq:run: cannot move the fastq files")
                         exit(1)
     elif run_id and request_id is None:
         if len(run_id) == 1:
@@ -217,7 +222,8 @@ def run(
                             os.path.join(target_path_to_link, item),
                         )
                     except OSError as e:
-                        logger.warning("procees_fastq: run: cannot create symlink %s", e)
+                        logger.warning(
+                            "procees_fastq: run: cannot create symlink %s", e)
             check_value, trim_length = compare_read_length(
                 read_length_list,
                 expected_read_length,
@@ -248,7 +254,8 @@ def run(
                     try:
                         shutil.move(fq, target_path_to_link)
                     except IOError as e:
-                        logger.error("process_fastq:run: cannot move the fastq files")
+                        logger.error(
+                            "process_fastq:run: cannot move the fastq files")
                         exit(1)
         else:
             logger.debug(
@@ -298,7 +305,8 @@ def run(
                         else:
                             all_fq_r2_list.append(fq)
 
-            merge_fq_r1, merge_fq_r2 = hp.merge_fastq(all_fq_r1_list, all_fq_r2_list, target_path_to_link)
+            merge_fq_r1, merge_fq_r2 = hp.merge_fastq(
+                all_fq_r1_list, all_fq_r2_list, target_path_to_link)
             logger.info("process_fastq:run: Merged fastq R1:%s", merge_fq_r1)
             logger.info("process_fastq:run: Merged fastq R2:%s", merge_fq_r2)
             try:
@@ -311,7 +319,8 @@ def run(
         logger.debug(
             "process_fastq:run: I am in where run id is not present and request_id is not present"
         )
-        glob_file_path = gdp.make_path(fastq_path, sample_id, run_id, request_id)
+        glob_file_path = gdp.make_path(
+            fastq_path, sample_id, run_id, request_id)
         logger.info(
             "process_fastq: run: the path to search for files: %s", glob_file_path
         )
@@ -323,7 +332,8 @@ def run(
             p_run_id = p_path.parent.parent.name
             target_path_to_link = hp.make_directory(p_sample_id, output_path)
             fastq_list = gfi.get_fastq(m_path)
-            logger.info("process_fastq: run: the fastq path files: %s", fastq_list)
+            logger.info(
+                "process_fastq: run: the fastq path files: %s", fastq_list)
             read_length_list = gfi.get_fastq_read_length(fastq_list)
             run_dict[p_run_id]["path"] = m_path
             run_dict[p_run_id]["fastq_list"] = fastq_list
@@ -336,7 +346,8 @@ def run(
                             os.path.join(target_path_to_link, item),
                         )
                     except OSError as e:
-                        logger.warning("procees_fastq: run: cannot create symlink %s", e)
+                        logger.warning(
+                            "procees_fastq: run: cannot create symlink %s", e)
             check_value, trim_length = compare_read_length(
                 read_length_list, expected_read_length, m_path, fastq_path, fastq_list
             )
@@ -357,7 +368,8 @@ def run(
                     else:
                         all_fq_r2_list.append(fq)
 
-        merge_fq_r1, merge_fq_r2 = hp.merge_fastq(all_fq_r1_list, all_fq_r2_list, target_path_to_link)
+        merge_fq_r1, merge_fq_r2 = hp.merge_fastq(
+            all_fq_r1_list, all_fq_r2_list, target_path_to_link)
         logger.info("process_fastq:run: Merged fastq R1:%s", merge_fq_r1)
         logger.info("process_fastq:run: Merged fastq R2:%s", merge_fq_r2)
         try:

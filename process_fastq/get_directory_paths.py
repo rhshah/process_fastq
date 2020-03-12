@@ -10,7 +10,6 @@ Created on July 26, 2019
 Description: this function helps to create and provide directories
 @author: Ronak H Shah
 """
-
 import os
 import logging
 import glob
@@ -24,20 +23,25 @@ logger = logging.getLogger("process_fastq")
 
 
 def make_path(dir_path, sample_id, run_id, request_id):
-    logger.info("get_directory_paths: make_pathMaking file path to search for files")
+    logger.info(
+        "get_directory_paths: make_pathMaking file path to search for files")
     if run_id:
         glob_run_id = "*" + run_id + "*"
     else:
         glob_run_id = "*"
-    logger.debug("get_directory_paths: make_path: glob_run_id: %s", glob_run_id)
+    logger.debug(
+        "get_directory_paths: make_path: glob_run_id: %s", glob_run_id)
     if request_id:
         glob_request_id = "*" + request_id + "*"
     else:
         glob_request_id = "*Proj*"
-    logger.debug("get_directory_paths: make_path: glob_request_id: %s", glob_request_id)
+    logger.debug(
+        "get_directory_paths: make_path: glob_request_id: %s", glob_request_id)
     glob_sample_id = "*_" + sample_id + "_*"
-    logger.debug("get_directory_paths: make_path: glob_sample_id: %s", glob_sample_id)
-    glob_path = os.path.join(dir_path, glob_run_id, glob_request_id, glob_sample_id)
+    logger.debug(
+        "get_directory_paths: make_path: glob_sample_id: %s", glob_sample_id)
+    glob_path = os.path.join(dir_path, glob_run_id,
+                             glob_request_id, glob_sample_id)
     logger.debug("get_directory_paths: make_path: glob_path: %s", glob_path)
 
     """
@@ -74,7 +78,8 @@ def make_path(dir_path, sample_id, run_id, request_id):
         stdout, stderr = out.communicate()
         if stderr is None:
             logger.debug(
-                "get_directory_paths: make_path: Read: %s", stdout.decode("utf-8")
+                "get_directory_paths: make_path: Read: %s", stdout.decode(
+                    "utf-8")
             )
             glob_path = stdout.decode("utf-8").split("\n")[:-1]
         else:
@@ -137,7 +142,8 @@ def make_path(dir_path, sample_id, run_id, request_id):
                 glob_path.append(sort_m_path.pop())
         else:
             pass
-    logger.debug("get_directory_paths: make_path: glob glob_path: %s", glob_path)
+    logger.debug(
+        "get_directory_paths: make_path: glob glob_path: %s", glob_path)
     logger.info(
         "get_directory_paths: make_path: Finished making file path to search for files"
     )

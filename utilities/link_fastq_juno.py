@@ -11,8 +11,6 @@ Description: console script for running process_fastq on manifest level on juno
 @author: Ronak H Shah
 """
 
-
-try:
 import os
 import sys
 import logging
@@ -20,6 +18,8 @@ import time
 import subprocess
 import shlex
 import re
+
+try:
     import click
 except ImportError as e:
     print(
