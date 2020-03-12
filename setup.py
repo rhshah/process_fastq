@@ -53,7 +53,7 @@ setup(
     include_package_data=True,
     keywords="process_fastq",
     name="process_fastq",
-    packages=find_packages(include=["process_fastq"]),
+    packages=find_packages(include=["process_fastq","utilites"]),
     setup_requires=setup_requirements,
     test_suite="tests",
     tests_require=test_requirements,
