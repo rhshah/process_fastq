@@ -32,7 +32,8 @@ logger = logging.getLogger("process_fastq")
 
 def read_excel(file):
     logger.info("helper: make_path: Reading the excel file: %s", file)
-    pdataframe = pd.read_excel(file, sheet_name=0, keep_default_na="True", index_col=0)
+    pdataframe = pd.read_excel(
+        file, sheet_name=0, keep_default_na="True", index_col=0)
     logger.info("helper: make_path: Finished reading excel file: %s", file)
     return pdataframe
 
@@ -51,7 +52,8 @@ def all_same(items):
 
 def is_empty(any_structure):
     if any_structure:
-        logger.info("helper: is_empty Structure is not empty. %s", any_structure)
+        logger.info("helper: is_empty Structure is not empty. %s",
+                    any_structure)
         return False
     else:
         logger.info("helper: is_empty: Structure is empty.")
@@ -65,7 +67,8 @@ def make_directory(name, path):
         os.mkdir(dirName)
         logger.info("helper: make_directory: Directory created: %s", dirName)
     except FileExistsError as e:
-        logger.warning("helper: make_directory: Directory already exists: %s", dirName)
+        logger.warning(
+            "helper: make_directory: Directory already exists: %s", dirName)
         logger.warning("helper: make_directory: Data might be overwritten")
     return dirName
 
@@ -87,4 +90,3 @@ def merge_fastq(fastq_list_R1, fastq_list_R2, output_path):
             with open(fastq, 'rb') as infile:
                 shutil.copyfileobj(infile, outfile)
     return [out_file_path_1, out_file_path_2]
-

@@ -53,11 +53,11 @@ setup(
     include_package_data=True,
     keywords="process_fastq",
     name="process_fastq",
-    packages=find_packages(include=["process_fastq"]),
+    packages=find_packages(include=["process_fastq","utilites"]),
     setup_requires=setup_requirements,
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/rhshah/process_fastq",
-    version="2.0.8",
+    version="2.1.0",
     zip_safe=False,
 )
