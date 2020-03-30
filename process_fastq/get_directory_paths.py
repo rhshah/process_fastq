@@ -37,7 +37,7 @@ def make_path(dir_path, sample_id, run_id, request_id):
         glob_request_id = "*Proj*"
     logger.debug(
         "get_directory_paths: make_path: glob_request_id: %s", glob_request_id)
-    glob_sample_id = "*_" + sample_id + "$"
+    glob_sample_id = ".*_" + sample_id + "$"
     logger.debug(
         "get_directory_paths: make_path: glob_sample_id: %s", glob_sample_id)
     glob_path = os.path.join(dir_path, glob_run_id,
