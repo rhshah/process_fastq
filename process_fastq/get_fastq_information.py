@@ -12,7 +12,6 @@ Description: this function helps to get_fastq_read_length and get_fastq
 
 
 import os
-import pathlib
 import glob
 import logging
 import subprocess
