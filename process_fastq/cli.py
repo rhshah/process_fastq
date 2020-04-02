@@ -50,8 +50,8 @@ __all__ = []
 __version__ = version
 __date__ = "2019-07-27"
 __updated__ = "2019-07-28"
-# Making logging possible
-# Making logging possible
+
+## Making logging possible
 pid = os.getpid()
 logger_name = "process_fastq" + "_" + str(pid)
 logger = logging.getLogger(logger_name)
@@ -122,7 +122,8 @@ def main(
     request_id=None,
     run_id=None,
 ):
-    logger_output = os.path.join(output_path, "process_fastq.log")
+    logger_output = os.path.join(
+        output_path, "process_fastq", "_", str(pid), ".log")
     fh = logging.FileHandler(logger_output)
     formatter = logging.Formatter(
         fmt="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
