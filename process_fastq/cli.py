@@ -122,8 +122,9 @@ def main(
     request_id=None,
     run_id=None,
 ):
+    logger_file_name = "process_fastq" + "_" + str(pid) + ".log"
     logger_output = os.path.join(
-        output_path, "process_fastq", "_", str(pid), ".log")
+        output_path, logger_file_name)
     fh = logging.FileHandler(logger_output)
     formatter = logging.Formatter(
         fmt="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
