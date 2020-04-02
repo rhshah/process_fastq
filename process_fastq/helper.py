@@ -27,7 +27,9 @@ except ImportError as e:
     exit(1)
 
 # Making logging possible
-logger = logging.getLogger("process_fastq")
+pid = os.getpid()
+logger_name = "process_fastq" + "_" + str(pid)
+logger = logging.getLogger(logger_name)
 
 
 def read_excel(file):

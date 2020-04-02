@@ -11,7 +11,6 @@ Description: this function helps to create and provide directories
 @author: Ronak H Shah
 """
 
-
 import os
 import logging
 import glob
@@ -21,7 +20,9 @@ import pathlib
 from collections import defaultdict
 
 # Making logging possible
-logger = logging.getLogger("process_fastq")
+pid = os.getpid()
+logger_name = "process_fastq" + "_" + str(pid)
+logger = logging.getLogger(logger_name)
 
 
 def make_path(dir_path, sample_id, run_id, request_id):
@@ -70,15 +71,15 @@ def make_path(dir_path, sample_id, run_id, request_id):
          "get_directory_paths: make_path: the commandline is %s",
           cmd,
          )
-     out = subprocess.Popen(
+    out = subprocess.Popen(
           (cmd),
           stdin=subprocess.PIPE,
           stdout=subprocess.PIPE,
           stderr=subprocess.STDOUT,
           shell=True,
           )
-      stdout, stderr = out.communicate()
-       if stderr is None:
+    stdout, stderr = out.communicate()
+    if stderr is None:
             logger.debug(
                 "get_directory_paths: make_path: Read: %s", stdout.decode(
                     "utf-8")
@@ -94,9 +95,9 @@ def make_path(dir_path, sample_id, run_id, request_id):
             exit(1)
         logger.debug(
             "get_directory_paths: make_path: what is glob_path, %s", glob_path)
+    if run_id is None or request_id is None:
         ext_project_id = []
         ext_run_dict = defaultdict(list)
-    if run_id is None or request_id is None:
         for m_path in glob_path:
             p_path = pathlib.Path(m_path)
             e_run_id = p_path.parent.parent.name

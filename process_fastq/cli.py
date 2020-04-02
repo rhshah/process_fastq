@@ -51,7 +51,10 @@ __version__ = version
 __date__ = "2019-07-27"
 __updated__ = "2019-07-28"
 # Making logging possible
-logger = logging.getLogger("process_fastq")
+# Making logging possible
+pid = os.getpid()
+logger_name = "process_fastq" + "_" + str(pid)
+logger = logging.getLogger(logger_name)
 click_log.basic_config(logger)
 click_log.ColorFormatter.colors["info"] = dict(fg="green")
 

@@ -18,7 +18,9 @@ import pathlib
 import tempfile
 
 # Making logging possible
-logger = logging.getLogger("process_fastq")
+pid = os.getpid()
+logger_name = "process_fastq" + "_" + str(pid)
+logger = logging.getLogger(logger_name)
 
 
 def run(cutadapt_path, output_path, fastq_list, trim_length):
