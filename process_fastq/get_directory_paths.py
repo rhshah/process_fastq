@@ -66,7 +66,7 @@ def make_path(dir_path, sample_id, run_id, request_id):
         )
         logger.debug(
             "get_directory_paths: make_path: the commandline is %s",
-            cmd.encode("unicode_escape").decode("utf-8"),
+            cmd,
         )
         out = subprocess.Popen(
             (cmd),
@@ -82,6 +82,7 @@ def make_path(dir_path, sample_id, run_id, request_id):
                     "utf-8")
             )
             glob_path = stdout.decode("utf-8").split("\n")[:-1]
+            logger.info("get_directory_paths: make_path: command finished succesfully, this glob_path %s", glob_path)
         else:
             logger.error(
                 "get_directory_paths: make_path: could not find the fastq files for: %s",
@@ -141,6 +142,7 @@ def make_path(dir_path, sample_id, run_id, request_id):
                 sort_m_path = sorted(m_path)
                 glob_path.append(sort_m_path.pop())
         else:
+            logger.info("get_directory_paths: make_path: I am a simple case")
             pass
     logger.debug(
         "get_directory_paths: make_path: glob glob_path: %s", glob_path)
