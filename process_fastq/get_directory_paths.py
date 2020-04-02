@@ -89,6 +89,7 @@ def make_path(dir_path, sample_id, run_id, request_id):
                 sample_id,
             )
             exit(1)
+        logger.debug("get_directory_paths: make_path: what is glob_path, %s", glob_path)
         ext_project_id = []
         ext_run_dict = defaultdict(list)
         for m_path in glob_path:
