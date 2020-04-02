@@ -31,6 +31,14 @@ def get_fastq(dir_path):
     glob_path_R2 = os.path.join(dir_path, R2_pattern)
     glob_path_R1 = glob.glob(glob_path_R1)
     glob_path_R2 = glob.glob(glob_path_R2)
+    if not glob_path_R1 or not glob_path_R2:
+        if not glob_path_R1:
+            logger.error(
+                "get_fastq_information: get_fastq: Could not glob R1 fastq.gz file in path %s", glob_path_R1)
+        else:
+            logger.error(
+                "get_fastq_information: get_fastq: Could not glob R2 fastq.gz file in path %s", glob_path_R2)
+        exit(1)
     logger.info("get_fastq_information: get_fastq: Done globbing fastq.gz file")
     return ["".join(glob_path_R1), "".join(glob_path_R2)]
 
