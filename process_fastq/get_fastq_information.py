@@ -22,13 +22,13 @@ logger = logging.getLogger("process_fastq")
 
 def get_fastq(dir_path):
     logger.info("get_fastq_information: get_fastq: Globbing fastq.gz file")
-    R1_pattern = "/*_R1_*.gz"
-    R2_pattern = "/*_R2_*.gz"
+    R1_pattern = "*_R1_*.gz"
+    R2_pattern = "*_R2_*.gz"
     logger.debug(
         "get_fastq_information: get_fastq: Path to search for fastq: %s", dir_path
     )
-    glob_path_R1 = dir_path + R1_pattern
-    glob_path_R2 = dir_path + R2_pattern
+    glob_path_R1 = dir_path + "/" + R1_pattern
+    glob_path_R2 = dir_path + "/" + R2_pattern
     glob_path_R1 = glob.glob(glob_path_R1)
     glob_path_R2 = glob.glob(glob_path_R2)
     if not glob_path_R1 or not glob_path_R2:
