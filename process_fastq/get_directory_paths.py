@@ -19,7 +19,8 @@ import re
 import pathlib
 from collections import defaultdict
 
-# Making logging possible
+
+## Making logging possible
 pid = os.getpid()
 logger_name = "process_fastq" + "_" + str(pid)
 logger = logging.getLogger(logger_name)
@@ -66,35 +67,35 @@ def make_path(dir_path, sample_id, run_id, request_id):
         + '"'
         + " 2>&1 | grep -v "
         + '"Permission denied"'
-        )
+    )
     logger.debug(
-         "get_directory_paths: make_path: the commandline is %s",
-          cmd,
-         )
+        "get_directory_paths: make_path: the commandline is %s",
+        cmd,
+    )
     out = subprocess.Popen(
-          (cmd),
-          stdin=subprocess.PIPE,
-          stdout=subprocess.PIPE,
-          stderr=subprocess.STDOUT,
-          shell=True,
-          )
+        (cmd),
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        shell=True,
+    )
     stdout, stderr = out.communicate()
     if stderr is None:
-            logger.debug(
-                "get_directory_paths: make_path: Read: %s", stdout.decode(
-                    "utf-8")
-            )
-            glob_path = stdout.decode("utf-8").split("\n")[:-1]
-            logger.info(
-                "get_directory_paths: make_path: command finished succesfully, this glob_path %s", glob_path)
-        else:
-            logger.error(
-                "get_directory_paths: make_path: could not find the fastq files for: %s",
-                sample_id,
-            )
-            exit(1)
         logger.debug(
-            "get_directory_paths: make_path: what is glob_path, %s", glob_path)
+            "get_directory_paths: make_path: Read: %s", stdout.decode(
+                "utf-8")
+        )
+        glob_path = stdout.decode("utf-8").split("\n")[:-1]
+        logger.info(
+            "get_directory_paths: make_path: command finished succesfully, this glob_path %s", glob_path)
+    else:
+        logger.error(
+            "get_directory_paths: make_path: could not find the fastq files for: %s",
+            sample_id,
+        )
+        exit(1)
+    logger.debug(
+        "get_directory_paths: make_path: what is glob_path, %s", glob_path)
     if run_id is None or request_id is None:
         ext_project_id = []
         ext_run_dict = defaultdict(list)
